@@ -1,9 +1,14 @@
-import './App.css'
+import { Route, Routes } from "react-router-dom"
+import Login from "./pages/Login/Login"
+import AllSongs from "./pages/AllSongs/AllSongs"
 
 function App() {
 
   return (
-   <h1 className='bg-slate-500'>Hola mundo</h1>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/all-songs" element={<AllSongs />} />
+    </Routes>
   )
 }
 
