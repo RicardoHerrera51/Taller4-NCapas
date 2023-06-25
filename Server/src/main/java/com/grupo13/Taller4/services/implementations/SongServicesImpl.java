@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.grupo13.Taller4.models.dtos.ResponseSongsDTO;
 import com.grupo13.Taller4.models.dtos.SaveSongDTO;
 import com.grupo13.Taller4.models.entities.Song;
 import com.grupo13.Taller4.repositories.SongRepository;
@@ -40,9 +45,9 @@ public class SongServicesImpl
 	}
 
 	@Override
-	public List<Song> searchSongByKeyword(String keyword) {
+	public ResponseSongsDTO searchSongByKeyword(String keyword, int page ,int size) {
 
-		List<Song> songsList = songRepository.findAll();
+		Page<Song> songsList = findAll(page,size);
 		List<Song> matchingSong = new ArrayList<>();
 
 		for (Song songs : songsList) {
@@ -50,12 +55,19 @@ public class SongServicesImpl
 				matchingSong.add(songs);
 			}
 		}
-		return matchingSong;
+		ResponseSongsDTO response = new ResponseSongsDTO(songsList,matchingSong);
+		return response;
 	}
 
 	@Override
 	public List<Song> findAll() {
 		return songRepository.findAll();
+	}
+
+	@Override
+	public Page<Song> findAll(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size,Sort.by("Title").ascending());
+		return songRepository.findAll(pageable);
 	}
 
 }
