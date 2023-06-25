@@ -1,8 +1,7 @@
 package com.grupo13.Taller4.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.grupo13.Taller4.models.dtos.AddSongDTO;
 import com.grupo13.Taller4.models.dtos.AddSongToPlaylistDTO;
 import com.grupo13.Taller4.models.dtos.GetPlaylistDTO;
+import com.grupo13.Taller4.models.dtos.PageDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDetailsDTO;
+import com.grupo13.Taller4.models.dtos.ResponsePlaylistDTO;
 import com.grupo13.Taller4.models.entities.Playlist;
 import com.grupo13.Taller4.models.entities.User;
 import com.grupo13.Taller4.services.PlaylistServices;
@@ -72,7 +72,9 @@ public class PlaylistController {
 	
 	
 	@GetMapping("/user/playlist")
-	public ResponseEntity<?> findAllPlaylistByUser(@RequestBody @Valid GetPlaylistDTO info,  BindingResult valid , @RequestHeader("Authorization") String bearerToken) throws Exception{
+	public ResponseEntity<?> findAllPlaylistByUser(@RequestBody @Valid GetPlaylistDTO info,  BindingResult valid ,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+			@RequestHeader("Authorization") String bearerToken) throws Exception{
 		
 		if (valid.hasErrors()) 
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -81,12 +83,30 @@ public class PlaylistController {
 		
 		if(info.getKeyword() == null) {
 			
-			List<Playlist> playlist = playlistServices.findAllByUserId(user.getUsername());
+			Page<Playlist> playlist = playlistServices.finAllByUser(user.getUsername(),page,size);
 		
-			return new ResponseEntity<>(playlist , HttpStatus.OK);
+			return new ResponseEntity<>(new PageDTO<Playlist>(
+						
+					playlist.getContent(),
+					playlist.getNumber(),
+					playlist.getSize(),
+					playlist.getTotalElements(),
+					playlist.getTotalPages()
+					
+					),
+					 HttpStatus.OK);
 		}else {
-			List<Playlist> filterPlaylist = playlistServices.searchPlaylistsByKeyword(user.getUsername(),info.getKeyword());
-			return new ResponseEntity<>(filterPlaylist, HttpStatus.OK);
+			ResponsePlaylistDTO filterPlaylist = playlistServices.searchPlaylistsByKeyword(user.getUsername(),info.getKeyword(),page,size);
+			return new ResponseEntity<>(new PageDTO<Playlist>(
+					
+					filterPlaylist.getMatchinPlaylist(),
+					filterPlaylist.getPages().getNumber(),
+					filterPlaylist.getPages().getSize(),
+					filterPlaylist.getPages().getTotalElements(),
+					filterPlaylist.getPages().getTotalPages()
+					
+					), 
+					HttpStatus.OK);
 		}
 		
 	}
