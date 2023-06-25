@@ -7,11 +7,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.grupo13.Taller4.models.dtos.AddSongToPlaylistDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDetailsDTO;
+import com.grupo13.Taller4.models.dtos.ResponsePlaylistDTO;
 import com.grupo13.Taller4.models.dtos.SongDTO;
 import com.grupo13.Taller4.models.entities.Playlist;
 import com.grupo13.Taller4.models.entities.Song;
@@ -132,10 +137,9 @@ public class PlaylistServicesImpl
    }
 	
 	@Override
-	public List<Playlist> searchPlaylistsByKeyword(String username, String keyword) {
+	public ResponsePlaylistDTO searchPlaylistsByKeyword(String username, String keyword, int page ,int size) {
 			
-		User user = userServices.findByName(username);
-		 List<Playlist> userPlaylists = playlistRepository.findByUserCode(user.getCode());
+		 Page<Playlist> userPlaylists = finAllByUser(username,page,size);
 		 
 	        List<Playlist> matchingPlaylists = new ArrayList<>();
 
@@ -144,8 +148,9 @@ public class PlaylistServicesImpl
 	                matchingPlaylists.add(playlist);
 	            }
 	        }
-
-	        return matchingPlaylists;
+	        
+	        ResponsePlaylistDTO response = new ResponsePlaylistDTO(userPlaylists,matchingPlaylists);
+	        return response;
 	}
 
 
@@ -181,6 +186,14 @@ public class PlaylistServicesImpl
 
 		return totalDuration;
 	}
+
+	@Override
+	public Page<Playlist> finAllByUser(String username, int page, int size) {
+		User user = userServices.findByName(username);
+		Pageable pageable = PageRequest.of(page, size,Sort.by("title").ascending());
+		return playlistRepository.findAllByUser(user, pageable);
+	}
+
 
 
 
