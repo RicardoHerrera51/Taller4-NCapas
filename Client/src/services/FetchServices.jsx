@@ -15,7 +15,7 @@ FetchServices.login = async (identifier, password) => {
     });
 
     if (response.ok) {
-        const {token} = await response.json();
+        const { token } = await response.json();
         return token;
     }
 
@@ -48,6 +48,31 @@ FetchServices.getAllSongs = async (token, queryParam) => {
 
     if (response.ok) {
         const data = await response.json();
+        return data;
+    }
+
+    return undefined;
+}
+
+FetchServices.createPlaylist = async (token, title, description) => {
+    const response = await fetch(`${BASE_URL}/playlist`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: title,
+            description: description
+        })
+    });
+
+    if (response.status === 409) {
+        alert(`Petition was not made`); // Throw an error if status code is 409
+    }
+
+    if (response.ok) {
+        const { data } = await response.json();
         return data;
     }
 
