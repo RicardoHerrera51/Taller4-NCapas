@@ -20,7 +20,8 @@ export default function Login() {
                 // Check if the authentication was successful
                 if (response) {
                     // Redirect to the songs page after successful login
-                    console.log('Login successful', response);
+                    console.log('Login successful');
+                    localStorage.setItem('token', response);
                     navigate('/all-songs');
                 } else {
                     // Handle authentication failure (e.g., display an error message)

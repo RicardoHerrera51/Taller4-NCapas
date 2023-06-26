@@ -54,6 +54,24 @@ FetchServices.getAllSongs = async (token, queryParam) => {
     return undefined;
 }
 
+FetchServices.getAllPlaylists = async (token, keyword) => {
+    const queryParams = keyword ? `?keyword=${keyword}` : '';
+    const response = await fetch(`${BASE_URL}/user/playlist${queryParams}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    }
+
+    throw new Error("Failed to fetch playlists");
+};
+
 FetchServices.createPlaylist = async (token, title, description) => {
     const response = await fetch(`${BASE_URL}/playlist`, {
         method: "POST",
@@ -69,7 +87,7 @@ FetchServices.createPlaylist = async (token, title, description) => {
 
     if (response.status === 409) {
         alert(`Petition was not made`); // Throw an error if status code is 409
-    }
+      }
 
     if (response.ok) {
         const { data } = await response.json();
