@@ -12,14 +12,14 @@ const AllSongs = () => {
             try {
                 const token = await FetchServices.login("douglas@gmail.com", "12345678Aa!");
                 setToken(token);
-                await obtainSongs(token, searchKeyword);
+                obtainSongs(token, searchKeyword);
             } catch (error) {
                 console.error("Error fetching songs:", error);
             }
         };
 
         fetchData();
-    }, [token, searchKeyword]);
+    }, []);
 
     const handleSearchChange = (e) => {
         setSearchKeyword(e.target.value);
@@ -30,8 +30,8 @@ const AllSongs = () => {
         obtainSongs(token, searchKeyword);
     };
 
-    const obtainSongs = async (token, keyword) => {
-        const queryParam = keyword ? `?title=${keyword}` : ''; // Include the keyword as a query parameter if provided
+    const obtainSongs = (token, keyword) => {
+        const queryParam = keyword ? `?title=${encodeURIComponent(keyword)}` : ''; // Include the keyword as a query parameter if provided
 
         FetchServices.getAllSongs(token, queryParam)
             .then((response) => {
@@ -69,7 +69,7 @@ const AllSongs = () => {
                             <h2 className="flex-1 dark:text-white font-bold py-2">
                                 Title: {song.title}
                             </h2>
-                            <p className="flex text-gray-400 py-2">
+                            <p className="flex text-gray-400 py-2 items-center">
                                 Duration: {song.duration}
                             </p>
                         </div>

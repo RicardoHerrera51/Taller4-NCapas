@@ -15,7 +15,7 @@ FetchServices.login = async (identifier, password) => {
     });
 
     if (response.ok) {
-        const {token} = await response.json();
+        const { token } = await response.json();
         return token;
     }
 
@@ -53,5 +53,23 @@ FetchServices.getAllSongs = async (token, queryParam) => {
 
     return undefined;
 }
+
+FetchServices.getAllPlaylists = async (token, keyword) => {
+    const queryParams = keyword ? `?keyword=${keyword}` : '';
+    const response = await fetch(`${BASE_URL}/user/playlist${queryParams}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    }
+
+    throw new Error("Failed to fetch playlists");
+};
 
 export default FetchServices;
