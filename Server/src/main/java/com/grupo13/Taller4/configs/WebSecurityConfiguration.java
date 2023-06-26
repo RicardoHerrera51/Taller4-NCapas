@@ -27,8 +27,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
