@@ -4,6 +4,7 @@ import AllSongs from "./pages/AllSongs/AllSongs"
 import SongToPlaylist from "./pages/SongToPlaylist/SongToPlaylist"
 import SeePlaylists from "./pages/SeePlaylists/SeePlaylists"
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails"
+import CreatePlaylist from "./pages/CreatePlaylist/CreatePlaylist"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/song/:code" element={<SongToPlaylist />} /> {/* http://localhost:8080/playlist/ & http://localhost:8080/playlist/?playlistCode=code */}
       <Route path="/all-playlists" element={<SeePlaylists />} /> {/* http://localhost:8080/user/playlist */}
       <Route path="/playlist-details/:code" element={<PlaylistDetails />} /> {/* http://localhost:8080/playlist/?playlistCode=code */}
+      <Route path="/create-playlist" element={<CreatePlaylist />} /> {/* http://localhost:8080/playlist */}
     </Routes>
   )
 }

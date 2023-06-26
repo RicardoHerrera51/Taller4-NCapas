@@ -6,20 +6,24 @@ const AllSongs = () => {
     const [songs, setSongs] = useState([]);
     const [token, setToken] = useState("");
     const [searchKeyword, setSearchKeyword] = useState('');
+    const [page, setPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalElements, setTotalElements] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = await FetchServices.login("douglas@gmail.com", "12345678Aa!");
+                const token = localStorage.getItem('token');
                 setToken(token);
-                obtainSongs(token, searchKeyword);
+                obtainSongs(token, searchKeyword, page, pageSize);
             } catch (error) {
                 console.error("Error fetching songs:", error);
             }
         };
 
         fetchData();
-    }, []);
+    }, [page, pageSize]);
 
     const handleSearchChange = (e) => {
         setSearchKeyword(e.target.value);
@@ -27,20 +31,34 @@ const AllSongs = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        obtainSongs(token, searchKeyword);
+        setPage(0); // Reset the page to 0 when performing a new search
+        obtainSongs(token, searchKeyword, 0, pageSize); // Pass page as 0
     };
 
-    const obtainSongs = (token, keyword) => {
-        const queryParam = keyword ? `?title=${encodeURIComponent(keyword)}` : ''; // Include the keyword as a query parameter if provided
+    const obtainSongs = (token, keyword, page, size) => {
+        const queryParam = keyword ? `?title=${encodeURIComponent(keyword)}` : "";
+        const queryParams = `page=${page}&size=${size}`;
+        const fetchUrl = `${queryParam ? `${queryParam}&` : "?"}${queryParams}`;
 
-        FetchServices.getAllSongs(token, queryParam)
+        FetchServices.getAllSongs(token, fetchUrl)
             .then((response) => {
-                console.log("All songs:", response);
-                setSongs(response);
+                const songsData = response.content || [];
+                const totalElements = response.totalElements || 0;
+                const totalPages = response.totalPages || 0;
+
+                console.log("Songs:", songsData);
+
+                setSongs(songsData);
+                setTotalElements(totalElements);
+                setTotalPages(totalPages);
             })
-            .catch(() => {
-                console.log("Error obtaining songs");
+            .catch((error) => {
+                console.log("Error obtaining songs:", error);
+                setSongs([]);
+                setTotalElements(0);
+                setTotalPages(0);
             });
+
     };
 
     return (
@@ -63,7 +81,7 @@ const AllSongs = () => {
             {/* Render the song list */}
             <div className="flex flex-col justify-center">
                 <h1 className="text-3xl dark:text-white font-bold text-center pt-12 pb-4">All songs</h1>
-                {songs.map((song) => (
+                {songs !== null && songs.map((song) => (
                     <Link key={song.code} to={`/song/${song.code}`}>
                         <div className="flex flex-row gap-12 justify-center max-w-[400px] w-full mx-auto bg-gray-900 py-2 px-8 rounded-lg my-4">
                             <h2 className="flex-1 dark:text-white font-bold py-2">
@@ -75,6 +93,16 @@ const AllSongs = () => {
                         </div>
                     </Link>
                 ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center mt-4">
+                <button disabled={page === 0} onClick={() => setPage(page - 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-l">
+                    Prev
+                </button>
+                <button disabled={page === totalPages - 1} onClick={() => setPage(page + 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-r">
+                    Next
+                </button>
             </div>
         </div>
     );

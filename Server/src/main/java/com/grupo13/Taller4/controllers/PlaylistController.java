@@ -47,6 +47,7 @@ public class PlaylistController {
 	@PostMapping("/playlist")
 	private ResponseEntity<?> createPlaylist(@RequestBody @Valid PlaylistDTO info, BindingResult valid,
 			@RequestHeader("Authorization") String bearerToken) throws Exception {
+		String message = "";
 
 		if (valid.hasErrors())
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,18 +55,18 @@ public class PlaylistController {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (user == null) {
-			String response = "Usuario no encontrado";
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 		}
 
 		boolean request = playlistServices.save(info, user);
 
 		if (!request) {
-			String response = "Ya tienes una Playlist con ese mismo nombre";
-			return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+			message = "Ya tienes una Playlist con ese mismo nombre";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
 		} else {
-			String response = "Creacion de playlist exitosa";
-			return new ResponseEntity<>(response, HttpStatus.CREATED);
+			message = "Creacion de playlist exitosa";
+			return new ResponseEntity<>(message, HttpStatus.CREATED);
 		}
 	}
 	
@@ -115,7 +116,7 @@ public class PlaylistController {
 	@PostMapping("/playlist/")
 	private ResponseEntity<?> AddSongToPlaylist(@RequestParam("playlistCode") String playlistCode,
 			@RequestBody @Valid AddSongDTO info, BindingResult valid , @RequestHeader("Authorization") String bearerToken) throws Exception {
-	
+		String message = "";
 		
 		if (valid.hasErrors()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
@@ -128,12 +129,12 @@ public class PlaylistController {
 
 		if (agregate == false) {
 		
-			String message = "Esta cancion ya pertenece a la playlist";
+			message = "Esta cancion ya pertenece a la playlist";
 			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
 		} else {
 
 			
-			String message = "Se agrego la cancion correctamente";
+			message = "Se agrego la cancion correctamente";
 			return new ResponseEntity<>(message, HttpStatus.OK);
 		}
 
@@ -141,13 +142,14 @@ public class PlaylistController {
 	
 	@GetMapping("/playlist/")
 	public ResponseEntity<?> getDetailsPlaylist(@RequestParam("playlistCode") String playlistCode, @RequestHeader("Authorization") String bearerToken) {
+		String message = "";
 		
 	    try {
 	        PlaylistDetailsDTO newPlaylistDetails = playlistServices.getPlaylistDetails(playlistCode);
 	        return new ResponseEntity<>(newPlaylistDetails, HttpStatus.OK);
 	    }  catch (Exception e) {
 	       
-	        String message = "Ocurrió un error al intentar obtener los detalles de la playlist";
+	    	message = "Ocurrió un error al intentar obtener los detalles de la playlist";
 	        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
