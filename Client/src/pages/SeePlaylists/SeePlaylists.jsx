@@ -10,9 +10,9 @@ const SeePlaylists = () => {
       try {
         const token = localStorage.getItem('token');
         setToken(token);
-        const playlistsData = await FetchServices.getAllPlaylists(token, null);
+        const playlistsData = await FetchServices.getAllPlaylists(token,null);
         console.log("Fetched playlists:", playlistsData);
-        setPlaylists(playlistsData);
+        setPlaylists(playlistsData.content);
       } catch {
         console.error("Error fetching playlists");
       }
@@ -45,9 +45,9 @@ const SeePlaylists = () => {
       {/* Render playlists */}
       <div className="flex flex-col justify-center">
         <h1 className="text-3xl dark:text-white font-bold text-center pt-12 pb-4">My playlists</h1>
-        {playlists.map((playlist) => (
+        {playlists !== null && playlists.map((playlist) => (
           <div key={playlist.code} className="flex flex-col items-center gap-2 max-w-[400px] w-full mx-auto bg-gray-900 py-2 px-8 rounded-lg my-4">
-            <h2 className="flex-1 dark:text-white font-bold py-2">{playlist.name}</h2>
+            <h2 className="flex-1 dark:text-white font-bold py-2">{playlist.title}</h2>
             <p className="flex text-gray-400 py-2">{playlist.description}</p>
           </div>
         ))}

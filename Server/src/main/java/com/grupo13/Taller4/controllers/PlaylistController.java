@@ -73,16 +73,15 @@ public class PlaylistController {
 	
 	
 	@GetMapping("/user/playlist")
-	public ResponseEntity<?> findAllPlaylistByUser(@RequestBody @Valid GetPlaylistDTO info,  BindingResult valid ,
+	public ResponseEntity<?> findAllPlaylistByUser(@RequestParam(value = "keyword", required = false) String Keyword , 
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
 			@RequestHeader("Authorization") String bearerToken) throws Exception{
 		
-		if (valid.hasErrors()) 
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	
 		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		if(info.getKeyword() == null) {
+		if(Keyword == null) {
 			
 			Page<Playlist> playlist = playlistServices.finAllByUser(user.getUsername(),page,size);
 		
@@ -97,7 +96,7 @@ public class PlaylistController {
 					),
 					 HttpStatus.OK);
 		}else {
-			ResponsePlaylistDTO filterPlaylist = playlistServices.searchPlaylistsByKeyword(user.getUsername(),info.getKeyword(),page,size);
+			ResponsePlaylistDTO filterPlaylist = playlistServices.searchPlaylistsByKeyword(user.getUsername(),Keyword,page,size);
 			return new ResponseEntity<>(new PageDTO<Playlist>(
 					
 					filterPlaylist.getMatchinPlaylist(),

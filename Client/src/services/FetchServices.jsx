@@ -55,7 +55,7 @@ FetchServices.getAllSongs = async (token, queryParam) => {
 }
 
 FetchServices.getAllPlaylists = async (token, keyword) => {
-    const queryParams = keyword ? `?keyword=${keyword}` : '';
+    const queryParams = keyword ? `?keyword=${keyword}` : " ";
     const response = await fetch(`${BASE_URL}/user/playlist${queryParams}`, {
         method: "GET",
         headers: {
