@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-//import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FetchServices from "../../services/FetchServices";
 
 const PlaylistDetails = () => {
-    //const { code } = useParams();
-    const code = "a1909abc-7ee9-43de-b105-63032babea6b";
+    const { code } = useParams();
     const [playlist, setPlaylist] = useState(null);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const PlaylistDetails = () => {
               <p className="text-gray-400">Total Duration: {playlist.totalDuration}</p>
             </div>
             <div className="p-6">
-              <h3 className="text-white font-bold text-center">Songs in Playlist</h3>
+              <h3 className="text-white font-bold text-center py-2">Songs in Playlist</h3>
               {songs.length > 0 ? (
                 <div className="divide-y divide-gray-700">
                   {songs.map((song, index) => (
