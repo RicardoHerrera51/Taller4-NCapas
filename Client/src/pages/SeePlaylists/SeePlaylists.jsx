@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import FetchServices from "../../services/FetchServices";
+import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
 
 const SeePlaylists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -64,8 +66,10 @@ const SeePlaylists = () => {
   };
 
   return (
+    <>
     <div className="absolute bg-gray-800 h-full w-full p-2 overflow-y-auto">
-      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4" onSubmit={handleSearchSubmit}>
+    <Navbar />
+      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4"  onSubmit={handleSearchSubmit}>
         <h2 className="text-3xl dark:text-white font-bold text-center">
           Search Playlist
         </h2>
@@ -84,10 +88,12 @@ const SeePlaylists = () => {
       <div className="flex flex-col justify-center">
         <h1 className="text-3xl dark:text-white font-bold text-center pt-12 pb-4">My playlists</h1>
         {playlists !== null && playlists.map((playlist) => (
-          <div key={playlist.code} className="flex flex-col items-center gap-2 max-w-[400px] w-full mx-auto bg-gray-900 py-2 px-8 rounded-lg my-4">
-            <h2 className="flex-1 dark:text-white font-bold py-2">{playlist.title}</h2>
-            <p className="flex text-gray-400 py-2">{playlist.description}</p>
-          </div>
+          <Link key={playlist.code} to={`/playlist-details/${playlist.code}`}>
+            <div key={playlist.code} className="flex flex-col items-center gap-2 max-w-[400px] w-full mx-auto bg-gray-900 py-2 px-8 rounded-lg my-4">
+              <h2 className="flex-1 dark:text-white font-bold py-2">{playlist.title}</h2>
+              <p className="flex text-gray-400 py-2">{playlist.description}</p>
+            </div>
+          </Link>
         ))}
       </div>
 
@@ -102,6 +108,7 @@ const SeePlaylists = () => {
         </button>
       </div>
     </div>
+    </>
   );
 }
 

@@ -70,8 +70,7 @@ public class PlaylistController {
 		}
 	}
 	
-	
-	
+
 	@GetMapping("/user/playlist")
 	public ResponseEntity<?> findAllPlaylistByUser(@RequestParam(value = "keyword", required = false) String Keyword , 
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,

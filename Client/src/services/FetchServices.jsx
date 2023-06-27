@@ -55,6 +55,7 @@ FetchServices.getAllSongs = async (token, queryParam) => {
 }
 
 FetchServices.getAllPlaylists = async (token, queryParam) => {
+    console.log(`${BASE_URL}/user/playlist${queryParam}`);
     const response = await fetch(`${BASE_URL}/user/playlist${queryParam}`, {
         method: "GET",
         headers: {

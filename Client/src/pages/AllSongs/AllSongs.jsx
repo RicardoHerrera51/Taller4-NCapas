@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import FetchServices from "../../services/FetchServices";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
 
 const AllSongs = () => {
     const [songs, setSongs] = useState([]);
@@ -63,7 +64,9 @@ const AllSongs = () => {
     };
 
     return (
+       <>
         <div className="absolute bg-gray-800 h-full w-full p-2 overflow-y-auto">
+        <Navbar />
             <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4" onSubmit={handleSearchSubmit}>
                 <h2 className="text-3xl dark:text-white font-bold text-center">
                     Search Songs
@@ -97,15 +100,17 @@ const AllSongs = () => {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-center mt-4">
-                <button disabled={page === 0} onClick={() => setPage(page - 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-l">
-                    Prev
-                </button>
-                <button disabled={page === totalPages - 1} onClick={() => setPage(page + 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-r">
-                    Next
-                </button>
-            </div>
+    <div className="flex justify-center mt-4">
+    <button disabled={page === 0} onClick={() => setPage(page - 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-l">
+        Prev
+    </button>
+    <button disabled={page === totalPages - 1} onClick={() => setPage(page + 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-r">
+        Next
+    </button>
+    </div>
+
         </div>
+       </>
     );
 }
 
