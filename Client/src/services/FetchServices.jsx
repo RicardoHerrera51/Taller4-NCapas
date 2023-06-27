@@ -98,7 +98,7 @@ FetchServices.createPlaylist = async (token, title, description) => {
 }
 
 FetchServices.addSongToPlaylist = async (token, codeSong, queryParam) => {
-    const response = await fetch(`${BASE_URL}/playlist/${queryParam}`, {
+    const response =  fetch(`${BASE_URL}/playlist/${queryParam}`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`,

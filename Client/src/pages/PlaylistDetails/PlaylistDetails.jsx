@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FetchServices from "../../services/FetchServices";
+import Navbar from "../../components/Navbar/Navbar";
 
 const PlaylistDetails = () => {
     const { code } = useParams();
@@ -25,8 +26,11 @@ const PlaylistDetails = () => {
     const songs = playlist && playlist.songs ? playlist.songs : [];
 
     return (
-        <div className="absolute flex items-center justify-center bg-gray-800 text-white w-screen h-full p-6 overflow-y-auto">
-      <div className="max-w-[400px] w-full mx-auto bg-gray-900 pt-8 pb-4 px-8 rounded-lg">
+      
+        <div className="absolute bg-gray-800 w-screen h-full p-2 overflow-y-auto">    
+     <Navbar />
+      <div className="max-w-[400px] w-full mx-auto bg-gray-900 my-4 pb-4 px-8 rounded-lg">
+        
         <h2 className="text-3xl text-white font-bold text-center">Playlist Details</h2>
         {playlist ? (
           <>
