@@ -96,6 +96,26 @@ FetchServices.createPlaylist = async (token, title, description) => {
     return undefined;
 }
 
+FetchServices.addSongToPlaylist = async (token, codeSong, queryParam) => {
+    const response = await fetch(`${BASE_URL}/playlist/${queryParam}`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            codeSong: codeSong,
+        })
+    });
+
+    if (response.ok) {
+        const { data } = await response.json();
+        return data;
+    }
+
+    return undefined;
+}
+
 FetchServices.getPlaylistDetails = async (token, code) => {
     const response = await fetch(`${BASE_URL}/playlist/?playlistCode=${code}`, {
         method: "GET",
