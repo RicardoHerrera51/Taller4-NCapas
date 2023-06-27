@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FetchServices from "../../services/FetchServices";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
 
 const SeePlaylists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -65,8 +66,10 @@ const SeePlaylists = () => {
   };
 
   return (
+    <>
     <div className="absolute bg-gray-800 h-full w-full p-2 overflow-y-auto">
-      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4" onSubmit={handleSearchSubmit}>
+    <Navbar />
+      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4"  onSubmit={handleSearchSubmit}>
         <h2 className="text-3xl dark:text-white font-bold text-center">
           Search Playlist
         </h2>
@@ -105,6 +108,7 @@ const SeePlaylists = () => {
         </button>
       </div>
     </div>
+    </>
   );
 }
 

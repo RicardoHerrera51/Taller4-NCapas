@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FetchServices from "../../services/FetchServices";
+import Navbar from "../../components/Navbar/Navbar";
 
 const CreatePlaylist = () => {
   const [title, setTitle] = useState("");
@@ -19,7 +20,9 @@ const CreatePlaylist = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-800">
+  <>
+  <Navbar />
+    <div className="flex  flex-col items-center justify-center h-screen bg-gray-800">
       <div className="max-w-md w-full bg-gray-900 rounded-lg p-8">
         <h2 className="text-3xl text-white font-extrabold text-center mb-6">Create Playlist</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -38,7 +41,7 @@ const CreatePlaylist = () => {
           </div>
         </form>
       </div>
-    </div>
+    </div></>
   );
 };
 
