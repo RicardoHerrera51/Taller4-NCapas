@@ -10,7 +10,6 @@ const CreatePlaylist = () => {
 
     try {
       const token = localStorage.getItem('token');
-      console.log("Logged in with token:", token);
       const playlist = await FetchServices.createPlaylist(token, title, description);
       console.log("Created playlist:", playlist);
     } catch (error) {

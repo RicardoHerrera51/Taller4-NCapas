@@ -40,6 +40,7 @@ const AllSongs = () => {
         const queryParams = `page=${page}&size=${size}`;
         const fetchUrl = `${queryParam ? `${queryParam}&` : "?"}${queryParams}`;
         console.log("fetchUrl:", fetchUrl);
+        
         FetchServices.getAllSongs(token, fetchUrl)
             .then((response) => {
                 const songsData = response.content || [];
