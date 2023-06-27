@@ -96,4 +96,20 @@ FetchServices.createPlaylist = async (token, title, description) => {
     return undefined;
 }
 
+FetchServices.getPlaylistDetails = async (token, code) => {
+    const response = await fetch(`${BASE_URL}/playlist/?playlistCode=${code}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        const playlistDetails = await response.json();
+        return playlistDetails;
+    }
+
+    return null;
+}
+
 export default FetchServices;
