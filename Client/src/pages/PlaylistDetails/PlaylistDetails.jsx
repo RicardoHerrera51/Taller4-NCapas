@@ -4,34 +4,38 @@ import FetchServices from "../../services/FetchServices";
 import Navbar from "../../components/Navbar/Navbar";
 
 const PlaylistDetails = () => {
-    const { code } = useParams();
-    const [playlist, setPlaylist] = useState(null);
+  const { code } = useParams();
+  const [playlist, setPlaylist] = useState(null);
+  const [page, setPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10); // TODO: Add pagination
+    const [totalElements, setTotalElements] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
-    useEffect(() => {
-        const fetchPlaylistDetails = async () => {
-            try {
-                const token = localStorage.getItem("token");
-                const playlistDetails = await FetchServices.getPlaylistDetails(token, code);
-                setPlaylist(playlistDetails);
-            } catch (error) {
-                console.error("Error fetching playlist details:", error);
-                setPlaylist(null); // Set playlist to null on error
-            }
-        };
+  useEffect(() => {
+    const fetchPlaylistDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const playlistDetails = await FetchServices.getPlaylistDetails(token, code);
+        setPlaylist(playlistDetails);
+      } catch (error) {
+        console.error("Error fetching playlist details:", error);
+        setPlaylist(null); // Set playlist to null on error
+      }
+    };
 
 
-        fetchPlaylistDetails();
-    }, [code]);
+    fetchPlaylistDetails();
+  }, [code]);
 
-    const songs = playlist && playlist.songs ? playlist.songs : [];
+  const songs = playlist && playlist.songs ? playlist.songs : [];
 
-    return (
-      
-        <div className="absolute bg-gray-800 w-screen h-full p-2 overflow-y-auto">    
-     <Navbar />
-      <div className="max-w-[400px] w-full mx-auto bg-gray-900 my-4 pb-4 px-8 rounded-lg">
-        
-        <h2 className="text-3xl text-white font-bold text-center">Playlist Details</h2>
+  return (
+
+    <div className="absolute bg-gray-800 w-screen h-full overflow-y-auto">
+      <Navbar />
+      <div className="max-w-[400px] w-full mx-auto bg-gray-900 my-6 pb-4 px-8 rounded-lg">
+
+        <h2 className="text-3xl text-white font-bold text-center p-6">Playlist Details</h2>
         {playlist ? (
           <>
             <div className="p-6">
@@ -41,14 +45,26 @@ const PlaylistDetails = () => {
             <div className="p-6">
               <h3 className="text-white font-bold text-center py-2">Songs in Playlist</h3>
               {songs.length > 0 ? (
-                <div className="divide-y divide-gray-700">
-                  {songs.map((song, index) => (
-                    <div className="py-4" key={index}>
-                      <p className="text-white font-bold">{song.title}</p>
-                      <p className="text-gray-400">Duration: {song.duration}</p>
-                    </div>
-                  ))}
-                </div>
+                <>
+                  <div className="divide-y divide-gray-700">
+                    {songs.map((song, index) => (
+                      <div className="py-4" key={index}>
+                        <p className="text-white font-bold">{song.title}</p>
+                        <p className="text-gray-400">Duration: {song.duration}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="flex justify-center mt-4">
+                    <button disabled={page === 0} onClick={() => setPage(page - 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-l">
+                      Prev
+                    </button>
+                    <button disabled={page === totalPages - 1} onClick={() => setPage(page + 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-r">
+                      Next
+                    </button>
+                  </div>
+                </>
               ) : (
                 <p className="text-white">No songs found in the playlist.</p>
               )}
@@ -59,7 +75,7 @@ const PlaylistDetails = () => {
         )}
       </div>
     </div>
-    );
+  );
 };
 
 export default PlaylistDetails;

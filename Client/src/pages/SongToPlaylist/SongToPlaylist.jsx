@@ -88,10 +88,10 @@ const SongToPlaylist = () => {
   };
 
   return (
-    <div className="absolute bg-gray-800 w-screen h-full p-2 overflow-y-auto">
+    <div className="absolute bg-gray-800 w-screen h-full overflow-y-auto">
       <Navbar />
-      <form className="max-w-[400px] w-full mx-auto bg-gray-900 my-4 pb-4 px-8 rounded-lg" onSubmit={handleSearchSubmit}>
-        <h2 className="text-3xl dark:text-white font-bold text-center">
+      <form className="max-w-[400px] w-full mx-auto bg-gray-900 my-6 pb-4 px-8 rounded-lg" onSubmit={handleSearchSubmit}>
+        <h2 className="text-3xl dark:text-white font-bold text-center p-4">
           Add song to playlist
         </h2>
         <div className="flex flex-col text-gray-400 py-2">
@@ -118,7 +118,7 @@ const SongToPlaylist = () => {
 
 
       {/* Pagination */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 pb-6">
         <button disabled={page === 0} onClick={() => setPage(page - 1)} className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-l">
           Prev
         </button>

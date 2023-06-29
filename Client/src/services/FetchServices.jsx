@@ -2,6 +2,31 @@ const BASE_URL = 'http://localhost:8080';
 
 const FetchServices = {};
 
+FetchServices.register = async (username, email, password) => {
+    const response = await fetch(`${BASE_URL}/auth/signup`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password
+        })
+    });
+
+    if (response.ok) {
+        const token = await response;
+        return token;
+    }
+     else if (response.status === 409) {
+        throw new Error("An account already exists.");
+    }    
+    else {
+        throw new Error("Failed to register. Please try again.");
+    }
+}
+
 FetchServices.login = async (identifier, password) => {
     const response = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
@@ -85,20 +110,18 @@ FetchServices.createPlaylist = async (token, title, description) => {
         })
     });
 
-    if (response.status === 409) {
-        alert(`Petition was not made`); // Throw an error if status code is 409
-      }
-
     if (response.ok) {
-        const { data } = await response.json();
+        const data = await response;
         return data;
+    } else if (response.status === 409) {
+        throw new Error("The playlist already exists.");
+    } else {
+        throw new Error("Failed to create playlist. Please try again.");
     }
-
-    return undefined;
 }
 
 FetchServices.addSongToPlaylist = async (token, codeSong, queryParam) => {
-    const response =  fetch(`${BASE_URL}/playlist/${queryParam}`, {
+    const response = fetch(`${BASE_URL}/playlist/${queryParam}`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`,
