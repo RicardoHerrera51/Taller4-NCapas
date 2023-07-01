@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo13.Taller4.models.dtos.AddSongDTO;
 import com.grupo13.Taller4.models.dtos.AddSongToPlaylistDTO;
-import com.grupo13.Taller4.models.dtos.GetPlaylistDTO;
 import com.grupo13.Taller4.models.dtos.PageDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDTO;
 import com.grupo13.Taller4.models.dtos.PlaylistDetailsDTO;
 import com.grupo13.Taller4.models.dtos.ResponsePlaylistDTO;
+import com.grupo13.Taller4.models.dtos.SongDTO;
+import com.grupo13.Taller4.models.dtos.SongPlaylistPageDTO;
 import com.grupo13.Taller4.models.entities.Playlist;
 import com.grupo13.Taller4.models.entities.User;
 import com.grupo13.Taller4.services.PlaylistServices;
@@ -139,15 +140,29 @@ public class PlaylistController {
 	}
 	
 	@GetMapping("/playlist/")
-	public ResponseEntity<?> getDetailsPlaylist(@RequestParam("playlistCode") String playlistCode, @RequestHeader("Authorization") String bearerToken) {
-		String message = "";
-		
+	public ResponseEntity<?> getDetailsPlaylist(@RequestParam("playlistCode") String playlistCode, 
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+			@RequestHeader("Authorization") String bearerToken) {
+	
 	    try {
-	        PlaylistDetailsDTO newPlaylistDetails = playlistServices.getPlaylistDetails(playlistCode);
-	        return new ResponseEntity<>(newPlaylistDetails, HttpStatus.OK);
+	        PlaylistDetailsDTO newPlaylistDetails = playlistServices.getPlaylistDetails(playlistCode,page,size);
+	
+	    
+
+	      return new ResponseEntity<>(
+	        		new  SongPlaylistPageDTO(
+	    	        		newPlaylistDetails.getTitle(),
+	    	        		newPlaylistDetails.getDescription(),
+	    	        		new PageDTO<SongDTO>(newPlaylistDetails.getSongs(),
+	    	    	        		newPlaylistDetails.getPage().getNumber(),
+	    	    	        		newPlaylistDetails.getPage().getSize(),
+	    	    	        		newPlaylistDetails.getPage().getTotalElements(),
+	    	    	        		newPlaylistDetails.getPage().getTotalPages()
+	    	    	        		),
+	    	        		newPlaylistDetails.getTotalDuration()), HttpStatus.OK);
 	    }  catch (Exception e) {
 	       
-	    	message = "Ocurrió un error al intentar obtener los detalles de la playlist";
+	    	String message = "Ocurrió un error al intentar obtener los detalles de la playlist";
 	        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
