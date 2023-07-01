@@ -67,9 +67,9 @@ const SeePlaylists = () => {
 
   return (
     <>
-    <div className="absolute bg-gray-800 h-full w-full p-2 overflow-y-auto">
+    <div className="absolute bg-gray-800 h-full w-full overflow-y-auto">
     <Navbar />
-      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-4"  onSubmit={handleSearchSubmit}>
+      <form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg my-6"  onSubmit={handleSearchSubmit}>
         <h2 className="text-3xl dark:text-white font-bold text-center">
           Search Playlist
         </h2>
