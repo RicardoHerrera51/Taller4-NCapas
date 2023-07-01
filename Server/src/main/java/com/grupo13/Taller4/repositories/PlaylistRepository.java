@@ -18,9 +18,10 @@ public interface PlaylistRepository
 	
 	Playlist findByCode(UUID playlistCode);
 	
+	
 	List<Playlist> findByUserCode(UUID userId);
 	
-	Page<Playlist> findAllByUser(User user , Pageable pageabel);
+	Page<Playlist> findAllByUser(User user , Pageable pageable);
 
 
 }

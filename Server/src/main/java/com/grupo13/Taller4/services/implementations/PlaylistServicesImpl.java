@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -98,7 +99,7 @@ public class PlaylistServicesImpl
 	        return true;
 	    }
 
-	public PlaylistDetailsDTO getPlaylistDetails(String playlistCode)  throws Exception  {
+	public PlaylistDetailsDTO getPlaylistDetails(String playlistCode, int page, int size)  throws Exception  {
 		 UUID codeplylist = UUID.fromString(playlistCode);
 		 
 		 Playlist playlist = playlistRepository.findById(codeplylist)
@@ -108,14 +109,19 @@ public class PlaylistServicesImpl
 	            throw new NotFoundException();
 	        }
  ;
-       
-       List<SongXPlaylist> songXPlaylists = playlist.getSongs();
-       
+	 //Convert to Page
+		Pageable pageable = PageRequest.of(page, size);
+	  	
+	    List<SongXPlaylist> songXPlaylists = playlist.getSongs();
+	    int start = (int) pageable.getOffset();
+	    int end = Math.min((start + pageable.getPageSize()), songXPlaylists.size());
+	    List<SongXPlaylist> paginatedSongs = songXPlaylists.subList(start, end);
+	    Page<SongXPlaylist> songsPage = new PageImpl<>(paginatedSongs, pageable, songXPlaylists.size());
+
        List<SongDTO> songDTOs = new ArrayList<>();
        int totalDurationInSeconds = 0;
        
-
-       for (SongXPlaylist songXPlaylist : songXPlaylists) {
+       for (SongXPlaylist songXPlaylist : songsPage) {
            Song song = songXPlaylist.getSong();
            int durationInSeconds = song.getDuration();
            totalDurationInSeconds = totalDurationInSeconds + song.getDuration();
@@ -127,13 +133,14 @@ public class PlaylistServicesImpl
            SongDTO songDTO = new SongDTO(song.getTitle(), durationFormatted, songXPlaylist.getSaveDate());
            songDTOs.add(songDTO);
        }
-    
+      
+     
 
        int totalDurationInMinutes = totalDurationInSeconds / 60;
        int totalDurationSeconds = totalDurationInSeconds % 60;
        String totalDurationFormatted = String.format("%02d:%02d", totalDurationInMinutes, totalDurationSeconds);
 
-       return new PlaylistDetailsDTO(playlist.getTitle(), playlist.getDescription(), songDTOs, totalDurationFormatted);
+       return new PlaylistDetailsDTO(playlist.getTitle(), playlist.getDescription(), songDTOs, totalDurationFormatted,songsPage);
    }
 	
 	@Override

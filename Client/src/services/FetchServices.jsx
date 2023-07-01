@@ -19,9 +19,9 @@ FetchServices.register = async (username, email, password) => {
         const token = await response;
         return token;
     }
-     else if (response.status === 409) {
+    else if (response.status === 409) {
         throw new Error("An account already exists.");
-    }    
+    }
     else {
         throw new Error("Failed to register. Please try again.");
     }
@@ -140,8 +140,8 @@ FetchServices.addSongToPlaylist = async (token, codeSong, queryParam) => {
     return undefined;
 }
 
-FetchServices.getPlaylistDetails = async (token, code) => {
-    const response = await fetch(`${BASE_URL}/playlist/?playlistCode=${code}`, {
+FetchServices.getPlaylistDetails = async (token, queryParam) => {
+    const response = await fetch(`${BASE_URL}/playlist/${queryParam}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`
@@ -154,6 +154,6 @@ FetchServices.getPlaylistDetails = async (token, code) => {
     }
 
     return null;
-}
+};
 
 export default FetchServices;
