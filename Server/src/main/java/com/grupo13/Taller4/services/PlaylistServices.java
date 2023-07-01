@@ -17,7 +17,7 @@ public interface PlaylistServices {
 
 	boolean save (PlaylistDTO info , User user_code) throws Exception;
 	boolean addSongToPlaylist(AddSongToPlaylistDTO info)  throws Exception;
-	PlaylistDetailsDTO getPlaylistDetails(String playlistCode)  throws Exception;
+	PlaylistDetailsDTO getPlaylistDetails(String playlistCode , int page, int size)  throws Exception;
 	ResponsePlaylistDTO searchPlaylistsByKeyword(String username, String keyword, int page ,int size);
 	
 	Page<Playlist> finAllByUser(String id,int page, int size);
