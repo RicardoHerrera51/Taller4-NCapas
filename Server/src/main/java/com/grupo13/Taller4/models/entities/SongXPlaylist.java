@@ -20,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "songx_playlist")
+@Table(name = "songxplaylist")
 public class SongXPlaylist {
 	@Id
 	@Column(name = "code")
