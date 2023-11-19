@@ -4,6 +4,8 @@ import { HiOutlineLogout } from 'react-icons/hi';
 const Navbar = () => {
   const navigate = useNavigate();
 
+  const navbarTextStyle = "text-lg  text-grey-darkest hover:text-teal-300 m-1 p-2"
+
   const handleLogout = () => {
     // Remove the token from localStorage or any other storage mechanism
     localStorage.removeItem("token");
@@ -17,9 +19,9 @@ const Navbar = () => {
       <a className="text-3xl no-underline text-white ml-2">Taller 4</a>
       </div>
       <div className='flex flex-row'>
-        <button onClick={() => navigate('/all-songs')} className="text-lg  text-grey-darkest hover:text-teal-300 m-1 p-2 ">All Songs</button>
-        <button onClick={() => navigate('/all-playlists')} className="text-lg text-grey-darkest hover:text-teal-300 m-1 p-2">My Playlists</button>
-        <button onClick={() => navigate('/create-playlist')} className="text-lg text-grey-darkest hover:text-teal-300 m-1 p-2">Create Playlist</button>
+        <button onClick={() => navigate('/all-songs')} className={navbarTextStyle}>All Songs</button>
+        <button onClick={() => navigate('/all-playlists')} className={navbarTextStyle}>My Playlists</button>
+        <button onClick={() => navigate('/create-playlist')} className={navbarTextStyle}>Create Playlist</button>
         <button onClick={handleLogout}>
           <HiOutlineLogout size="40px" className="text-grey-darkest hover:text-teal-500 m-1 p-2" />
         </button>

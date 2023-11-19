@@ -7,6 +7,7 @@ import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails"
 import CreatePlaylist from "./pages/CreatePlaylist/CreatePlaylist"
 import Register from "./pages/Register/Register"
 import { useState } from "react"
+import MusicPlayer from "./pages/MusicPlayer/MusicPlayer"
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token'); // Change 'token' to your specific token key
@@ -27,6 +28,12 @@ function App() {
     <Routes>
       <Route path="/register" element={<Register />} /> {/* http://localhost:8080/auth/signup */}
       <Route path="/login" element={<Login onLogin={handleLogin} />} /> {/* http://localhost:8080/auth/login */}
+      <Route path="/all-songs" element={<AllSongs />} /> {/* http://localhost:8080/song/ & http://localhost:8080/song/?title=keyword */}
+      <Route path="/add-song/:code" element={<SongToPlaylist />} /> {/* http://localhost:8080/playlist/ & http://localhost:8080/playlist/?playlistCode=code */}
+      <Route path="/song/" element={<MusicPlayer/>}/>
+      <Route path="/all-playlists" element={<SeePlaylists />} /> {/* http://localhost:8080/user/playlist */}
+      <Route path="/playlist-details/:code" element={<PlaylistDetails />} /> {/* http://localhost:8080/playlist/?playlistCode=code */}
+      <Route path="/create-playlist" element={<CreatePlaylist />} /> {/* http://localhost:8080/playlist */}
       {loggedIn ? (
         <>
           <Route path="/all-songs" element={<AllSongs />} /> {/* http://localhost:8080/song/ & http://localhost:8080/song/?title=keyword */}
