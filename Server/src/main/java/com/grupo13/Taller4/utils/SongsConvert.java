@@ -19,7 +19,7 @@ public class SongsConvert {
             int minutes = duration / 60;
             int seconds = duration % 60;
             String formattedDuration = String.format("%d:%02d", minutes, seconds);
-            SongsDTO newDTO= new SongsDTO(song.getCode().toString(),song.getTitle(), formattedDuration);
+            SongsDTO newDTO= new SongsDTO(song.getCode().toString(),song.getTitle(), formattedDuration, song.getUrl());
             response.add(newDTO);
         }
         return response;

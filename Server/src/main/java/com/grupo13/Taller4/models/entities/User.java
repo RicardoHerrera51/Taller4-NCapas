@@ -58,6 +58,9 @@ public class User implements UserDetails{
     @Column(name = "active", insertable = false)
     private Boolean active;
     
+    @Column(name = "image")
+    private String image;
+    
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Token> tokens;
