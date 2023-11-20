@@ -200,9 +200,41 @@ public class PlaylistServicesImpl
 		Pageable pageable = PageRequest.of(page, size,Sort.by("title").ascending());
 		return playlistRepository.findAllByUser(user, pageable);
 	}
+	
+	//Delete play list
 
 
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public boolean deletePlaylist(String info, User user_code) throws Exception {
+		UUID playlistCode = UUID.fromString(info);
+		UUID extra = null ;
+		
+		//TODO: optimize play list repository, improve efficiency
+		List<Playlist> existplaylists= playlistRepository.findByUserCode(user_code.getCode());
+		Playlist existPlaylist = playlistRepository.findByCode(playlistCode);
+		
+		if(existPlaylist == null ) return false;
+	
+		for (Playlist playlist : existplaylists)
+		{
+			if(playlist.getTitle().equals(existPlaylist.getTitle()))
+			extra = playlist.getCode();
+			
+		}
+	
+		if (extra == null) return false;
 
+		List<SongXPlaylist> songsInPlaylist = songXPlaylistRepository.findByPlaylist(playlistRepository.findByCode(playlistCode));
+		
+		// delete all song by play list
+        songXPlaylistRepository.deleteAll(songsInPlaylist);
+   
+        playlistRepository.deleteById(playlistCode);
+
+		return true;
+		
+	}
 
 
 }
