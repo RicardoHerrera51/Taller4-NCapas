@@ -1,11 +1,24 @@
+import MusicPlayer from "../MusicPlayer/MusicPlayer"
+
 {/* Music player bar */ }
 
-function Navbar() {
+export default function MusicBar() {
   return (
     <section className="navbar bottom-0 lg:relative lg:top-0 z-50 btm-nav lg:navbar bg-light-black lg:bg-greenish-black lg:border-b lg:border-b-light-black lg:w-full">
-      Music Player
+      <div className="flex flex-row text-white imprima-400">
+        <div className="flex h-full w-1/3 gap-4 sm:pl-20">
+          <div className="avatar left-0">
+            <div className="w-full rounded-lg">
+              <img src="https://lastfm.freetls.fastly.net/i/u/500x500/42851f3f78390ec7f5bacd31c761c681.jpg" />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center text-sm">
+            <a className="text-white">Canción</a>
+            <a className="text-white">Artista</a>
+          </div>
+        </div>
+        <MusicPlayer />
+      </div>
     </section>
   )
 }
-
-export default Navbar
