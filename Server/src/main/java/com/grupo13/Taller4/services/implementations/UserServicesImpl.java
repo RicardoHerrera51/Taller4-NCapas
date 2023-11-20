@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.grupo13.Taller4.models.dtos.ProfileDTO;
 import com.grupo13.Taller4.models.dtos.RegisterUserDTO;
 import com.grupo13.Taller4.models.entities.Token;
 import com.grupo13.Taller4.models.entities.User;
@@ -56,7 +57,7 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public Boolean comparePassword(String toCompare, String current) {
+	public boolean comparePassword(String toCompare, String current) {
 		return passwordEncoder.matches(toCompare, current);
 	}
 
@@ -129,7 +130,29 @@ public class UserServicesImpl implements UserServices {
 			.getAuthentication()
 			.getName();
 		
-		return userRepository.findOneByUsernameOrEmail(username, username);
+		return userRepository.findByUsernameOrEmail(username, username);
+	}
+
+	@Override
+	public boolean profilePhotoUpdate(User user, String newUrl) {
+
+		if (user == null)
+			return false;
+
+		user.setImage(newUrl);
+		userRepository.save(user);
+		return true;
+
+	}
+
+	@Override
+	public ProfileDTO dataProfileUser(User user) {
+
+		ProfileDTO profile = new ProfileDTO();
+		profile.setGmail(user.getEmail());
+		profile.setImage(user.getImage());
+
+		return profile;
 	}
 
 }

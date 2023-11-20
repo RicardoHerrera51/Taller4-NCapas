@@ -3,14 +3,20 @@ package com.grupo13.Taller4.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo13.Taller4.models.dtos.LoginDTO;
+import com.grupo13.Taller4.models.dtos.ProfileDTO;
 import com.grupo13.Taller4.models.dtos.RegisterUserDTO;
 import com.grupo13.Taller4.models.dtos.TokenDTO;
 import com.grupo13.Taller4.models.entities.Token;
@@ -84,6 +90,36 @@ public class UserController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping("/profile")
+	public ResponseEntity<?> infoProfile(@RequestHeader("Authorization") String bearerToken)
+	{
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		ProfileDTO profile = userServices.dataProfileUser(user);
+		
+		if(profile ==null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(profile,HttpStatus.OK);
+	}
+	
+	@PatchMapping("/profile/image")
+	public ResponseEntity<?> imageProfile(@RequestParam("image") String newImage, @RequestHeader("Authorization") String bearerToken)
+	{
+		String message = " ";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		 boolean request = userServices.profilePhotoUpdate(user, newImage);
+		 
+		 if(!request)
+		 {
+			 message = "No pudo realizarce la actualización";
+			 return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
+		 }else
+		 {
+			 message = "Actualización de foto de perfil exitosa";
+			 return new ResponseEntity<>(message,HttpStatus.OK);
+		 }
 	}
 
 }
