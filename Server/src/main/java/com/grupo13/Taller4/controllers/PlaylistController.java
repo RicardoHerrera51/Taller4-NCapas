@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -167,5 +168,51 @@ public class PlaylistController {
 	    }
 	}
 	
+	@DeleteMapping("/playlist/delete")
+	public ResponseEntity<?> deletePlaylist(@RequestParam("playlistCode") String playlistCode, @RequestHeader("Authorization") String bearerToken) throws Exception {
+		String message = "";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (user == null) {
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		}
+		
+		boolean deleteRequest = playlistServices.deletePlaylist(playlistCode, user);
+		System.out.println(deleteRequest);
+		
+		if (!deleteRequest) {
+			message = "La playlist que desea eliminar no existe dentro de su biblioteca";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+		} else {
+			message = "La playlist ha sido eminada exitosamente";
+			return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+		}
+		
+	}
+	
+	@DeleteMapping("/playlist/song/delete")
+	public ResponseEntity<?> deleteSongFromPlaylist(@RequestParam("playlistCode") String playlistCode, @RequestParam("songCode") String songCode, @RequestHeader("Authorization") String bearerToken) throws Exception
+	{
+		String message = "";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (user == null) {
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		}
+		
+		boolean deleteSongRequest = playlistServices.deleteSongFromPlaylist(playlistCode, songCode,  user);
+		
+		if (!deleteSongRequest) {
+			message = "La cancion o el nombre de la plylist no es valido";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+		} else {
+			message = "La canción a sido elimanda exitosamente de la playlist";
+			return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+		}
+		
+	}
+
 
 }
