@@ -44,6 +44,9 @@ public class Song {
     @Column(name="url")
     private String url;
     
+    @Column(name="album_cover")
+    private String album_cover;
+    
     @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<SongXPlaylist> playlists;

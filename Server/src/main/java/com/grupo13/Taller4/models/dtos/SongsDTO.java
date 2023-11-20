@@ -21,4 +21,7 @@ public class SongsDTO {
 	
 	@NotEmpty
 	private String url;
+	
+	@NotEmpty
+	private String album_cover;
 }
