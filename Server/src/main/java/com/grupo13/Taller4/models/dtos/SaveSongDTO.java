@@ -15,4 +15,7 @@ public class SaveSongDTO {
 	
 	@NotEmpty
 	private int duration;
+	
+	@NotEmpty
+	private String url;
 }

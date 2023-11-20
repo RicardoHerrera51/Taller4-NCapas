@@ -17,6 +17,8 @@ public class RegisterUserDTO {
 	@NotEmpty
 	@Email
 	private String email;
+	
+	private String image;
 
 	@NotEmpty
 	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$", message = "La contraseña no cumple con los requisitos.")

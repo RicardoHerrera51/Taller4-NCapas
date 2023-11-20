@@ -18,4 +18,7 @@ public class SongsDTO {
 	
 	@NotEmpty
 	private String duration;
+	
+	@NotEmpty
+	private String url;
 }
