@@ -12,7 +12,7 @@ public interface UserRepository
 
 	boolean existsByUsername(String username);
 	boolean existsByEmail(String email);
-	User findOneByUsernameOrEmail(String username, String email);
+	User findByUsernameOrEmail(String username, String email);
 	User findByUsername(String username);
 	User findByEmail(String email);
 	User findOneByCode(UUID code);
