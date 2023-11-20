@@ -122,6 +122,19 @@ public class UserServicesImpl implements UserServices {
 		
 	}
 
+	@Override
+	public Boolean logOut(String tokenContent) throws Exception {
+		Token token = tokenRepository.findByContent(tokenContent);
+		if (token != null && jwtTools.verifyToken(token.getContent())) {
+	        token.setActive(false);
+	        tokenRepository.save(token);
+	        return true;
+	    } else {
+	        return false;
+	    }
+		
+	}
+	
 
 	@Override
 	public User findUserAuthenticated() {
@@ -154,5 +167,7 @@ public class UserServicesImpl implements UserServices {
 
 		return profile;
 	}
+
+	
 
 }

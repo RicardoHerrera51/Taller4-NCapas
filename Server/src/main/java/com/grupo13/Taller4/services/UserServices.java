@@ -20,6 +20,7 @@ public interface UserServices {
 	Token registerToken(User user) throws Exception;
 	Boolean isTokenValid(User user, String token);
 	void cleanTokens(User user) throws Exception;
+	Boolean logOut(String tokenContent) throws Exception;
 	
 	//Find User authenticated
 	User findUserAuthenticated();

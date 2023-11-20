@@ -13,6 +13,7 @@ public interface TokenRepository
 extends ListCrudRepository<Token, UUID>{ 
 	
 	Token findByContent(String content);
+	
 	List<Token> findByUserAndActive(User user, Boolean active);
 
 }
