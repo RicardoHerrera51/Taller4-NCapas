@@ -208,32 +208,58 @@ public class PlaylistServicesImpl
 	@Transactional(rollbackOn = Exception.class)
 	public boolean deletePlaylist(String info, User user_code) throws Exception {
 		UUID playlistCode = UUID.fromString(info);
-		UUID extra = null ;
-		
-		//TODO: optimize play list repository, improve efficiency
-		List<Playlist> existplaylists= playlistRepository.findByUserCode(user_code.getCode());
-		Playlist existPlaylist = playlistRepository.findByCode(playlistCode);
-		
-		if(existPlaylist == null ) return false;
-	
-		for (Playlist playlist : existplaylists)
-		{
-			if(playlist.getTitle().equals(existPlaylist.getTitle()))
-			extra = playlist.getCode();
-			
-		}
-	
-		if (extra == null) return false;
+		UUID extra = null;
 
-		List<SongXPlaylist> songsInPlaylist = songXPlaylistRepository.findByPlaylist(playlistRepository.findByCode(playlistCode));
+		List<Playlist> existplaylists = playlistRepository.findByUserCode(user_code.getCode());
+		Playlist existPlaylist = playlistRepository.findByCode(playlistCode);
+
+		if (existPlaylist == null)
+			return false;
+
+		for (Playlist playlist : existplaylists) {
+			if (playlist.getTitle().equals(existPlaylist.getTitle()))
+				extra = playlist.getCode();
+
+		}
+
+		if (extra == null)
+			return false;
 		
+		List<SongXPlaylist> songsInPlaylist = songXPlaylistRepository
+				.findByPlaylist(playlistRepository.findByCode(playlistCode));
+
 		// delete all song by play list
-        songXPlaylistRepository.deleteAll(songsInPlaylist);
-   
-        playlistRepository.deleteById(playlistCode);
+		songXPlaylistRepository.deleteAll(songsInPlaylist);
+
+		playlistRepository.deleteById(playlistCode);
 
 		return true;
+
+	}
+	
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public boolean deleteSongFromPlaylist(String playlistCode, String songCode, User user_code) throws Exception {
+			UUID codeplaylist = UUID.fromString(playlistCode);
+			UUID codeSong = UUID.fromString(songCode);
 		
+		//TODO: optimize play list repository, improve efficiency
+		List<Playlist> existplaylist = findAllByUserId(user_code.getUsername());
+		existplaylist = findAllByUserId(user_code.getEmail());
+		//all play list by user
+		
+		for (Playlist playlist : existplaylist)
+		{
+			if(!playlist.getTitle().equals(playlistRepository.findByCode(codeplaylist).getTitle())) return false;
+				//play list delete not found
+		}
+		
+		//find song in play list
+		 SongXPlaylist songXPlaylist = songXPlaylistRepository.findByPlaylistAndSong(playlistRepository.findByCode(codeplaylist),songRepository.findByCode(codeSong));
+		 if (songXPlaylist == null)  return false; // song not associated with play list
+	  
+		 songXPlaylistRepository.delete(songXPlaylist);
+		return true;
 	}
 
 

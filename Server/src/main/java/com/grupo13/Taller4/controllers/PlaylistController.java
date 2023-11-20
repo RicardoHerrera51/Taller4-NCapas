@@ -191,7 +191,28 @@ public class PlaylistController {
 		
 	}
 	
+	@DeleteMapping("/playlist/song/delete")
+	public ResponseEntity<?> deleteSongFromPlaylist(@RequestParam("playlistCode") String playlistCode, @RequestParam("songCode") String songCode, @RequestHeader("Authorization") String bearerToken) throws Exception
+	{
+		String message = "";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+		if (user == null) {
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		}
+		
+		boolean deleteSongRequest = playlistServices.deleteSongFromPlaylist(playlistCode, songCode,  user);
+		
+		if (!deleteSongRequest) {
+			message = "La cancion o el nombre de la plylist no es valido";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+		} else {
+			message = "La canción a sido elimanda exitosamente de la playlist";
+			return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+		}
+		
+	}
 
 
 }
