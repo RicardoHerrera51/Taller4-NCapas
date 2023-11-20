@@ -1,9 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FetchServices from "../../services/FetchServices";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 
 const AllSongs = () => {
+    /*Placeholder data*/
+    const placeholderSongs = [
+        { "code": "song1", "title": "Sakura Melody", "duration": "3:45" },
+        { "code": "song2", "title": "Kawaii Dream", "duration": "2:58" },
+        { "code": "song3", "title": "Anime Breeze", "duration": "4:12" },
+        { "code": "song4", "title": "Cherry Blossom Serenade", "duration": "5:21" },
+        { "code": "song5", "title": "Moonlit Sonata", "duration": "3:34" }
+      ];
     const [songs, setSongs] = useState([]);
     const [token, setToken] = useState("");
     const [searchKeyword, setSearchKeyword] = useState('');
@@ -35,6 +43,8 @@ const AllSongs = () => {
         setPage(0); // Reset the page to 0 when performing a new search
         obtainSongs(token, searchKeyword, 0, pageSize); // Pass page as 0
     };
+
+    const audioRef = useRef();
 
     const obtainSongs = (token, keyword, page, size) => {
         const queryParam = keyword ? `?title=${encodeURIComponent(keyword)}` : "";
@@ -85,8 +95,8 @@ const AllSongs = () => {
                 {/* Render the song list */}
                 <div className="flex flex-col justify-center">
                     <h1 className="text-3xl dark:text-white font-bold text-center pt-12 pb-4">All songs</h1>
-                    {songs !== null && songs.map((song) => (
-                        <Link key={song.code} to={`/song/${song.code}`}>
+                    {placeholderSongs !== null && placeholderSongs.map((song) => (
+                        <Link to={`/song`} state={{ code: song.code, title: song.title, duration: song.duration, audioRef: audioRef}}>
                             <div className="flex flex-row gap-12 justify-center max-w-[400px] w-full mx-auto bg-gray-900 py-2 px-8 rounded-lg my-4">
                                 <h2 className="flex-1 dark:text-white font-bold py-2">
                                     Title: {song.title}
