@@ -25,12 +25,12 @@ const MusicPlayer = () => {
     };
     
     const calculateProgress = () => {
-        return (currentTime / duration) * 100;
+        return (currentTime / aDuration) * 100;
     };
     
     return(
         <div className="flex flex-row w-full bg-gray-400 py-4">
-            <audio src='https://dl.vgmdownloads.com/soundtracks/akumajo-dracula-gallery-of-labyrinth-original-soundtrack/qwpxwvbgta/1-04%20Invitation%20of%20a%20Crazed%20Moon.mp3' 
+            <audio src='https://ia600703.us.archive.org/19/items/01DevilTrigger/01%20-%20Devil%20Trigger.mp3' 
             ref={audioRef} 
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}/>
@@ -41,10 +41,10 @@ const MusicPlayer = () => {
             <input
             type="range"
             min="0"
-            max={duration}
+            max={aDuration}
             value={currentTime}
             onChange={handleSeek}
-            className="w-max h-4 rounded-full bg-gray-300 appearance-none focus:outline-none"
+            className="w-full h-4 rounded-full bg-gray-300 appearance-none focus:outline-none"
             style={{ background: `linear-gradient(to right, #4dc0b5 ${calculateProgress()}%, #d4d4d4 0%)` }}
             />
 

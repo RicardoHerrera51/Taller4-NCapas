@@ -24,7 +24,7 @@ const Controls = ({ audioRef }) => {
     };
     
     return(
-        <div>
+        <div className="flex flex-row ml-20 mr-20">
             <button>
           <IoPlaySkipBackSharp />
         </button>
@@ -33,7 +33,7 @@ const Controls = ({ audioRef }) => {
         </button>
 
         <button onClick={togglePlayPause}>
-            {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
+            {isPlaying ? <IoPauseSharp className="h-10 w-10"/> : <IoPlaySharp className="h-10 w-10"/>}
         </button>
         <button>
           <IoPlayForwardSharp />
