@@ -5,8 +5,11 @@ import Sidebar from '../../components/Navbars/Sidebar';
 import PlaylistCard from '../../components/PlaylistCard/PlaylistCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyPlaylists() {
+    const navigate = useNavigate();
+
     return (
         <div className="drawer lg:drawer-open bg-greenish-black">
             <input type="checkbox" className="drawer-toggle" />
@@ -22,7 +25,7 @@ export default function MyPlaylists() {
                             <div className='flex justify-start w-full lg:pl-10 px-15 imprima-700'> {/* Hacer dinamico el lg:pl  */}
                                 <a className='text-2xl'>Mis playlists</a>
                             </div>
-                            <button className="btn btn-xs h-8 w-8 ml-1 rounded-full border-none bg-light-green hover:bg-darkest-green active:bg-dark-green">
+                            <button onClick={() => navigate('/create-pl')} className="btn btn-xs h-8 w-8 ml-1 rounded-full border-none bg-light-green hover:bg-darkest-green active:bg-dark-green">
                                 <FontAwesomeIcon icon={faPlus} style={{color: "#ffffff",}} />
                             </button>
                         </div>

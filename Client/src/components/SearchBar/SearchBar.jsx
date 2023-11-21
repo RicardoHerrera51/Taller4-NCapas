@@ -13,6 +13,5 @@ export default function SearchBar() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#ffffff", }} size="sm" />
             </button>
         </form>
-
     )
 }

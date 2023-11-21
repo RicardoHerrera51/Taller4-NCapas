@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard/Dashboard"
 import CreatePlaylist from "./pages/CreatePlaylist/CreatePlaylist"
 import MyPlaylists from "./pages/MyPlaylists/MyPlaylists"
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails"
+import Profile from "./pages/Profile/Profile"
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Route path="/create-pl" element={ <CreatePlaylist /> } />
       <Route path="/my-pl" element={ <MyPlaylists /> } />
       <Route path="/pl-details" element={ <PlaylistDetails /> } />
+      <Route path="/profile" element={ <Profile /> } />
     </Routes>
   )
 }

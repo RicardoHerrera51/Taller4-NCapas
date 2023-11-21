@@ -1,6 +1,8 @@
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
+{/* Mobile navbar */ }
+
 export default function MobNavbar() {
     return (
         <section className="navbar lg:hidden bg-gray-900 max-w-full">
