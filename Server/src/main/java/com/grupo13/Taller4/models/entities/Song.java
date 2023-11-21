@@ -47,6 +47,10 @@ public class Song {
     @Column(name="album_cover")
     private String album_cover;
     
+    @NotNull(message = "El artista de la canción es obligatorio")
+    @Column(name="artist")
+    private String artist;
+    
     @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<SongXPlaylist> playlists;
