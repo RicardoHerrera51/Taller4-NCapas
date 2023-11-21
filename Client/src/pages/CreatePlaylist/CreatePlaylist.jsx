@@ -1,6 +1,7 @@
 import MusicBar from '../../components/Navbars/MusicBar';
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import Sidebar from '../../components/Navbars/Sidebar';
+import Titles from '../../components/Titles/Titles';
 
 export default function CreatePlaylist() {
     return (
@@ -13,11 +14,9 @@ export default function CreatePlaylist() {
 
                 {/* Contenido*/}
                 <main className="lg:flex-1 h-screen lg:h-full flex flex-col items-center imprima-400 text-white px-10 pt-10 pb-28 lg:p-10 gap-5 overflow-y-auto scrollbar">
-                    <div className='flex justify-start w-full lg:px-10 px-15 pb-10 imprima-700'>
-                        <a className='text-2xl'>Crear playlist</a>
-                    </div>
+                    <Titles title='Crear Playlist' />
                     {/* Form */}
-                    <div className="w-full sm:w-1/2 lg:w-1/2 bg-dark-cyan rounded-lg p-8 border-2 border-dark-cyan">
+                    <div className="w-full sm:w-1/2 lg:w-1/2 bg-dark-cyan rounded-lg p-8 mt-4">
                         <form className="flex flex-col gap-8">
                             <input id="title" name="title" type="text" className="w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none" placeholder="Título" required />
                             <textarea id="description" name="description" rows="3" className="w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none" placeholder="Descripción" required />

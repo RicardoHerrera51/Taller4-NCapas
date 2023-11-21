@@ -4,11 +4,13 @@ import CreatePlaylist from "./pages/CreatePlaylist/CreatePlaylist"
 import MyPlaylists from "./pages/MyPlaylists/MyPlaylists"
 import PlaylistDetails from "./pages/PlaylistDetails/PlaylistDetails"
 import Profile from "./pages/Profile/Profile"
+import Login from "./pages/Login/Login"
 
 function App() {
 
   return (
     <Routes>
+      <Route path="/login" element={ <Login /> } />
       <Route path="/" element={ <Dashboard /> } />
       <Route path="/create-pl" element={ <CreatePlaylist /> } />
       <Route path="/my-pl" element={ <MyPlaylists /> } />
