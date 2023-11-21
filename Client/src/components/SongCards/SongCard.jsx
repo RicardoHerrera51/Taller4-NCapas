@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function SongCard() {
     return (
-        <div className="card flex justify-center md:pr-10 pr-6 bg-light-blue text-sm md:text-base w-full lg:w-11/12 h-20 lg:h-20">
+        <div className="card flex justify-center md:pr-10 pr-6 bg-light-blue text-sm md:text-base w-full lg:w-11/12 h-20 lg:h-20 hover:cursor-pointer">
             <div className="flex flex-row items-center py-4 gap-4">
                 <div className="avatar left-0">
                     <div className="w-20 rounded-l-xl">
