@@ -31,7 +31,7 @@ public class SongController {
 
 	@GetMapping("/")
 	public ResponseEntity<?> SearchSongs(@RequestParam(value = "title", required = false) String titleFragment, 
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size,
 			@RequestHeader("Authorization") String bearerToken) {
 		
 		if (titleFragment != null) {
