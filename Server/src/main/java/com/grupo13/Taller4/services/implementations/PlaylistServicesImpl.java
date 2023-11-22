@@ -130,7 +130,7 @@ public class PlaylistServicesImpl
            int seconds = durationInSeconds % 60;
            String durationFormatted = String.format("%02d:%02d", minutes, seconds);
 
-           SongDTO songDTO = new SongDTO(song.getTitle(), durationFormatted, songXPlaylist.getSaveDate());
+           SongDTO songDTO = new SongDTO(song.getTitle(), durationFormatted, songXPlaylist.getSaveDate(),song.getUrl(),song.getAlbum_cover(),song.getArtist());
            songDTOs.add(songDTO);
        }
       

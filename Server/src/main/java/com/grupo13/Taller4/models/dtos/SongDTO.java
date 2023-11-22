@@ -12,4 +12,7 @@ public class SongDTO {
 	private String title;
     private String duration;
     private Date addedDate;
+    private String url;
+    private String album_cover;
+    private String artist;
 }
