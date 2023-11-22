@@ -2,7 +2,7 @@ export default function Register() {
     return (
         <div className='grid grid-cols-1 sm:grid-cols-2 min-h-screen p-6 sm:p-0 bg-greenish-black'>
             <div className='hidden sm:block'>
-                <img className='max-h-screen w-full' src="/assets/loginImage.jpg" alt="sideImage" />
+                <img className='h-screen w-full' src="/assets/loginImage.jpg" alt="sideImage" />
             </div>
 
             <div className='flex flex-col justify-center p-6'>
