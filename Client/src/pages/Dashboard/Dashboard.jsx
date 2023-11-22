@@ -5,8 +5,9 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import SongCard from '../../components/SongCards/SongCard';
 import Titles from '../../components/Titles/Titles';
 
+export default function Home({ user = "usuario" }) {
+  const token = localStorage.getItem('token');
 
-export default function Home({user = "usuario"}) {
   return (
     <div className="drawer lg:drawer-open bg-greenish-black">
       <input type="checkbox" className="drawer-toggle" />
