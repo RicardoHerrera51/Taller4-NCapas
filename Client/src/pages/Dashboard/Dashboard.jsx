@@ -38,7 +38,6 @@ export default function Home({user = "usuario"}) {
   }, []);
 
   const handleSearchButtonClick = (inputValue) => {
-    // Actualiza el estado solo cuando se hace clic en el botón de búsqueda
     setFilterValue(inputValue);
   };
 

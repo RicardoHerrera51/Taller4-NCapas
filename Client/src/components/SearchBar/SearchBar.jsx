@@ -21,7 +21,6 @@ export default function SearchBar({ onSearch, placeholder = "Buscar..." }) {
           placeholder={placeholder}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          required
         />
       </div>
       <button type="submit" className="btn btn-xs h-8 w-8 rounded-full border-none bg-light-green hover:bg-darkest-green active:bg-dark-green">

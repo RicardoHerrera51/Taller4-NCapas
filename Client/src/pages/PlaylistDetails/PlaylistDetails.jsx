@@ -8,13 +8,15 @@ import Titles from '../../components/Titles/Titles';
 import {getPlaylistbyID} from "../../services/songService";
 import {useEffect, useState} from "react";
 
-export default function PlaylistDetails({ songNumber = 20, plTime = "23:33"}) {
+export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
 
     
   const [loading, setLoading] = useState(false);
   const [playlist, setPlaylist] = useState();
   const [songs, setSongs] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
+  
+  const [filterValue, setFilterValue] = useState("");
 
   const getData = async () => {
         
@@ -38,12 +40,18 @@ export default function PlaylistDetails({ songNumber = 20, plTime = "23:33"}) {
     getData();
   }, []);
 
+  const handleSearchButtonClick = (inputValue) => {
+    setFilterValue(inputValue);
+  };
 
   const handleSelectedSong = (song) => {
     console.log(song);
     setSelectedSong(song);  
   };
 
+  const filteredSongs = songs.filter((song) =>
+  song.title.toLowerCase().includes(filterValue.toLowerCase())
+);
 
   const handleTest = () => {
     console.log(songs);
@@ -66,11 +74,11 @@ export default function PlaylistDetails({ songNumber = 20, plTime = "23:33"}) {
                             </div>
                         </div>
                         <div className='lg:px-10 px-15 pt-2'>
-                            <SearchBar placeholder='Busca una canción...' />
+                            <SearchBar onSearch={handleSearchButtonClick}  placeholder='Busca una canción...' />
                         </div>
                     </div>
                     {/* Display of songs in the playlist */}
-                    {songs.map((song) => (
+                    {filteredSongs.map((song) => (
                  <PLSongCard key={song.code} onClick={() => handleSelectedSong(song)}  cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration} />
               ))}
 
