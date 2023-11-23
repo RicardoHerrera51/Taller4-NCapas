@@ -16,7 +16,7 @@ function App() {
       <Route path="/" element={ <Dashboard /> } />
       <Route path="/create-pl" element={ <CreatePlaylist /> } />
       <Route path="/my-pl" element={ <MyPlaylists /> } />
-      <Route path="/pl-details" element={ <PlaylistDetails /> } />
+      <Route path="/my-pl/:id" element={ <PlaylistDetails /> } />
       <Route path="/profile" element={ <Profile /> } />
     </Routes>
   )
