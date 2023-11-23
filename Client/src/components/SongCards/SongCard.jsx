@@ -7,7 +7,8 @@ import {useEffect, useState} from "react";
 
 export default function SongCard({ cover , code, song = "Canción", artist = "Artista", duration = "3:33", 
 onClick, }) {
-
+  
+  const token = localStorage.getItem('token');
     const [loading, setLoading] = useState(false);
     const [playlists, setPlaylists] = useState([]);
     const [error, setError] = useState(false);
@@ -19,7 +20,7 @@ onClick, }) {
       try {
         
         setLoading(true);
-      let response = await getPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk");
+      let response = await getPlaylist(token);
       
       if (response) {
           setPlaylists(response.content);
@@ -38,7 +39,7 @@ onClick, }) {
     try {
       
       setLoading(true);
-    let response = await addSongToPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlist, code);
+    let response = await addSongToPlaylist(token, playlist, code);
   
     if (response) {
       console.log(response);

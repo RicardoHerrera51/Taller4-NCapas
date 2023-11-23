@@ -39,7 +39,7 @@ export default function Home({user = "usuario"}) {
     try {
       
       setLoading(true);
-    let response = await getSongs("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk");
+    let response = await getSongs(token);
     if (response) {
       setSongs(response.content);
       console.log(response.content);

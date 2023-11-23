@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
 
     
+  const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
   const [playlist, setPlaylist] = useState();
   const [songs, setSongs] = useState([]);
@@ -21,11 +22,12 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
   const [filterValue, setFilterValue] = useState("");
 
   const getData = async () => {
+
         
     try {
       
       setLoading(true);
-    let response = await getPlaylistbyID("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlistCode);
+    let response = await getPlaylistbyID(token, playlistCode);
     if (response) {
         setPlaylist(response);
       console.log(response);

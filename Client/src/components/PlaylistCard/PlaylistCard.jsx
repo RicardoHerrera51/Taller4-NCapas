@@ -8,6 +8,8 @@ import {deletePlaylist} from "../../services/songService";
 export default function PlaylistCard({  title = "Titulo de playlist", getData, description = "Descripción", duration = "23:33", code = "" }) {
     const navigate = useNavigate();
     
+  const token = localStorage.getItem('token');
+    
   const [loading, setLoading] = useState(false);
 
     const handleTest = () => {
@@ -20,7 +22,7 @@ export default function PlaylistCard({  title = "Titulo de playlist", getData, d
         try {
           
           setLoading(true);
-        let response = await deletePlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", code);
+        let response = await deletePlaylist(token, code);
         if (response) {
           console.log(response);
             getData();

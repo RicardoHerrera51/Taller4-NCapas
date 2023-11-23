@@ -6,6 +6,7 @@ import {deleteSongFromPlaylist} from "../../services/songService";
 export default function PLSongCard({ code, playlist, cover = "https://lastfm.freetls.fastly.net/i/u/500x500/42851f3f78390ec7f5bacd31c761c681.jpg", song = "Canción", artist = "Artista", duration = "3:33", onClick, getData }) {
     
 
+const token = localStorage.getItem('token');
 const [loading, setLoading] = useState(false);
 
 const handleTest = () => {
@@ -19,7 +20,7 @@ const deleteData = async () => {
     try {
       
       setLoading(true);
-    let response = await deleteSongFromPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlist, code);
+    let response = await deleteSongFromPlaylist(token, playlist, code);
     console.log(code);
     console.log(playlist);
     if (response) {
