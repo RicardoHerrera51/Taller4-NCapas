@@ -34,6 +34,8 @@ export const logout = async (token) => {
 
         if (response.status === 200) {
             return null;
+        } else {
+            throw new Error(`Failed to log in. Please try again.`);
         }
     } catch (error) {
         console.error("An error ocurred: ", error);
@@ -67,5 +69,24 @@ export const register = async (username, email, password) => {
             console.error("An error occurred: ", error);
             throw error;
         }
+    }
+}
+
+export const infoProfile = async (token) => {
+    try {
+        const response = await axios.get(`/auth/profile`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error('An error occurred while fetching profile information:', error);
+        throw error;
     }
 }
