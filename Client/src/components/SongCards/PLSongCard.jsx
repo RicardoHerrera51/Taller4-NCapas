@@ -7,7 +7,6 @@ export default function PLSongCard({ code, playlist, cover = "https://lastfm.fre
     const [loading, setLoading] = useState(false);
 
 const token = localStorage.getItem('token');
-const [loading, setLoading] = useState(false);
 
 const handleTest = () => {
     console.log(playlist);

@@ -14,12 +14,7 @@ onClick, }) {
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
 
-  const getData = async () => {
-    try {
-      setLoading(true);
-      let response = await getPlaylist(localStorage.getItem('token'));
-
-
+  
     const getData = async () => {
           
       try {

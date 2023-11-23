@@ -74,13 +74,7 @@ playlist.title.toLowerCase().includes(filterValue.toLowerCase())
               ))}
                 </main>
             </div>
-          </div>
-          {/* Display of created playlists */}
-          {playlists.map((playlist) => (
-            <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description} />
-          ))}
-        </main>
-      </div>
+          
 
       {/* Sidebar on web */}
       <Sidebar />
