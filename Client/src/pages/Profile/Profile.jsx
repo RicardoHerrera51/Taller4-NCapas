@@ -1,7 +1,7 @@
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import Titles from '../../components/Titles/Titles';
-import { infoProfile } from '../../services/AuthServices';
+import { infoProfile, updateProfile } from '../../services/AuthServices';
 import { useEffect, useState } from 'react';
 
 export default function Profile() {
@@ -11,9 +11,15 @@ export default function Profile() {
         image: "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
     });
 
+
+    
+    const token = localStorage.getItem('token');
+    
+    console.log('Token:', token);
+    const [newImage, setNewImage] = useState("");
+
     const getData = async () => {
         try {
-            const token = localStorage.getItem('token');
             const profileInfo = await infoProfile(token);
             
             setProfileData(profileInfo);
@@ -21,6 +27,36 @@ export default function Profile() {
             console.error('An error occurred while getting profile info:', error);
         }
     }
+
+
+    const updateImage= async () => {
+           
+                try {
+            
+            let response = await updateProfile(token, newImage);
+            if (response) {
+                console.log(response);
+                getData();
+                setNewImage("")
+            } 
+            } catch (error) {
+            console.error('Error al obtener datos de la API:', error);
+            }
+    }
+
+    const handleInputChange = (event) => {
+        setNewImage(event.target.value);
+      };
+
+      const handleModalClose = () => {
+        // Hacer algo con el valor newImage al cerrar el modal (por ejemplo, enviarlo a la API)
+        console.log('Nuevo valor de imagen:', newImage);
+        if (newImage != ''){
+            
+        updateImage();
+        }
+    
+      };
 
     useEffect(() => {
         getData();
@@ -44,8 +80,23 @@ export default function Profile() {
                                     <img src={profileData.image || "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"} alt="Profile" />
                                 </div>
                             </div>
-                            <button type='button' className="btn btn-sm w-40 h-9 lg:w-56 imprima-400 text-white hover:text-white active:text-white bg-light-green hover:bg-darkest-green active:bg-dark-green border-none rounded-full">Editar foto</button>
-                        </div>
+
+                            <button className="btn btn-sm w-40 h-9 lg:w-56 imprima-400 text-white hover:text-white active:text-white bg-light-green hover:bg-darkest-green active:bg-dark-green border-none rounded-full" onClick={()=>document.getElementById('my_modal_5').showModal()}>Editar foto</button>
+                                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle ">
+                                <div className="modal-box bg-gray-900 ">
+                                    <h3 className="font-bold text-lg">Ingrese nueva foto de perfil</h3>
+                                    <input 
+            onChange={handleInputChange} type="text" placeholder="URL de la imagen" className="input input-bordered my-2 w-full " />
+                                    <div className="modal-action">
+                                    <form method="dialog">
+                                        {/* if there is a button in form, it will close the modal */}
+                                        <button onClick={handleModalClose} className="btn">Aceptar</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                </dialog>
+
+                           </div>
                         <div className='flex flex-col justify-center items-center lg:items-start text-xl imprima-400 text-white lg:text-2xl lg:p-0'>
                             <a>{profileData.username}</a>
                             <a>{profileData.gmail}</a>

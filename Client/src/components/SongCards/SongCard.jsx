@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getPlaylist, addSongToPlaylist } from "../../services/songService";
 import { useEffect, useState } from "react";
 
-
 export default function SongCard({ cover, code, song = "Canción", artist = "Artista", duration = "3:33", onClick }) {
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
@@ -16,7 +15,14 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
     try {
       setLoading(true);
       let response = await getPlaylist(token);
-
+  
+    const getData = async () => {
+          
+      try {
+        
+        setLoading(true);
+      let response = await getPlaylist(token);
+      
       if (response) {
         setPlaylists(response.content);
         console.log(response.content);
