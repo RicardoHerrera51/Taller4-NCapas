@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import MusicBar from '../../components/Navbars/MusicBar';
 import Sidebar from '../../components/Navbars/Sidebar';
@@ -51,7 +51,7 @@ export default function Home({user = "usuario"}) {
 
   useEffect(() => {
     getData();
-    getUserData();
+    getuserData();
   }, []);
 
   const handleSearchButtonClick = (inputValue) => {
