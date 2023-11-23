@@ -2,11 +2,23 @@ import { faUser } from "@fortawesome/free-regular-svg-icons"
 import { faArrowRightFromBracket, faListUl } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../services/AuthServices";
 
 {/* Sidebar on web */ }
 
 function Sidebar() {
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const token = await logout(localStorage.getItem('token'));
+
+      console.log('Logout successful', token);
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  }
 
   return (
     <section className="drawer-side">
@@ -29,7 +41,7 @@ function Sidebar() {
             Perfil
           </a>
         </li>
-        <li onClick={() => navigate('/login')} className="rounded-lg hover:bg-dark-cyan active:bg-light-cyan">
+        <li onClick={handleLogout} className="rounded-lg hover:bg-dark-cyan active:bg-light-cyan">
           <a className="py-4 gap-6">
             <div className="flex justify-center items-center border-2 rounded-full w-7 h-7">
               <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ color: "#dffce5", }} size="sm" />

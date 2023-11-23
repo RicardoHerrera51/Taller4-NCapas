@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import MusicBar from '../../components/Navbars/MusicBar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SongCard from '../../components/SongCards/SongCard';
 import Titles from '../../components/Titles/Titles';
+import { infoProfile } from '../../services/AuthServices';
+
 
 import {getSongs} from "../../services/songService";
 import {useEffect, useState} from "react";
@@ -11,6 +14,9 @@ import {useEffect, useState} from "react";
 export default function Home({user = "usuario"}) {
 
   
+  const token = localStorage.getItem('token');
+  
+  const [userInfo, setUserInfo] = useState({ username: "usuario" });
   const [loading, setLoading] = useState(false);
   const [songs, setSongs] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
@@ -18,6 +24,16 @@ export default function Home({user = "usuario"}) {
   const [filterValue, setFilterValue] = useState("");
 
 
+  const getuserData = async () => {
+    try {
+      const userInfo = await infoProfile(token);
+
+      setUserInfo(userInfo);
+    } catch (error) {
+      console.error('An error occurred while getting the username info:', error);
+    }
+  };
+  
   const getData = async () => {
         
     try {
@@ -35,6 +51,7 @@ export default function Home({user = "usuario"}) {
 
   useEffect(() => {
     getData();
+    getUserData();
   }, []);
 
   const handleSearchButtonClick = (inputValue) => {
@@ -51,6 +68,7 @@ export default function Home({user = "usuario"}) {
   song.title.toLowerCase().includes(filterValue.toLowerCase())
 );
 
+
   return (
     <div className="drawer lg:drawer-open bg-greenish-black">
       <input type="checkbox" className="drawer-toggle" />
@@ -62,9 +80,11 @@ export default function Home({user = "usuario"}) {
         {/* Contenido*/}
         <main className="lg:flex-1 h-screen  lg:h-full flex flex-col items-center imprima-400 text-white px-10 pt-10 pb-28 lg:p-10 gap-5 overflow-y-auto scrollbar">
           <div className='flex lg:flex-row flex-col w-full imprima-700 lg:px-10 px-15 justify-between lg:items-center gap-4 pb-6'>
-            <a className='text-2xl'>Hola, {user}</a>
+
+            <a className='text-2xl'>Hola, {userInfo.username}</a>
             <SearchBar onSearch={handleSearchButtonClick}  onChange={(e) => setFilterValue(e.target.value)}
               value={filterValue} placeholder='Busca una cancion...' />
+
           </div>
           <Titles title='Canciones' />
           {filteredSongs.map((song) => (
