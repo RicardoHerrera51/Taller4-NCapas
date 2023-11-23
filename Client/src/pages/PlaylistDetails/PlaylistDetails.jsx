@@ -69,7 +69,7 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
                         <div className='flex flex-col order-last md:order-none items-center gap-2'>
                             <Titles title={playlist ? playlist.title : ""} />
                             <div className='flex justify-start w-full lg:px-10 px-15 pb-5 imprima-400'>
-                                <a className='text-base'>{playlist ? playlist.page.content.length : ""} canciones, {playlist ? playlist.totalDuration : ""}</a>
+                                <a className='text-base'>{playlist ? `${playlist.page.content.length} canciones ,` : ""}  {playlist ? playlist.totalDuration : ""}</a>
                             </div>
                         </div>
                         <div className='lg:px-10 px-15 pt-2'>
@@ -78,7 +78,7 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
                     </div>
                     {/* Display of songs in the playlist */}
                     {filteredSongs.map((song) => (
-                 <PLSongCard key={song.code} onClick={() => handleSelectedSong(song)}  cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration} />
+                 <PLSongCard key={song.code} onClick={() => handleSelectedSong(song)} code={song.code} playlist={playlistCode} cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration} getData={getData} />
               ))}
 
                 </main>
