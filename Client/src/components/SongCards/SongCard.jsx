@@ -10,13 +10,17 @@ onClick, }) {
 
     const [loading, setLoading] = useState(false);
     const [playlists, setPlaylists] = useState([]);
-  
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+
     const getData = async () => {
           
       try {
         
         setLoading(true);
       let response = await getPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk");
+      
       if (response) {
           setPlaylists(response.content);
         console.log(response.content);
@@ -24,6 +28,7 @@ onClick, }) {
         setLoading(false);
       } 
       } catch (error) {
+        setError(true);
       console.error('Error al obtener datos de la API:', error);
       }
   };
@@ -33,14 +38,27 @@ onClick, }) {
     try {
       
       setLoading(true);
-    let response = addSongToPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlist, code);
+    let response = await addSongToPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlist, code);
   
     if (response) {
       console.log(response);
-      
+      if(response === "Se agrego la cancion correctamente"){
+        setSuccess(true);
+        console.log("success");
+        setTimeout(() => {
+            setSuccess(false);
+        }, 1000);
+      }
+      else{
+        setError(true);
+        setTimeout(() => {
+            setError(false);
+        }, 1000);
+      }
       setLoading(false);
     } 
     } catch (error) {
+        
     console.error('Error al obtener datos de la API:', error);
     }
 };
@@ -61,6 +79,8 @@ onClick, }) {
 
     return (
         <div  className="card flex justify-center md:pr-10 pr-6 bg-light-blue text-sm md:text-base w-full lg:w-11/12 h-20 lg:h-20">
+            {success && <span className="absolute -top-5 right-0 text-light-blue">Cancion agregada exitosamente</span>}
+            {error && <span className="absolute -top-5 right-0 text-[#D84143]">La cancion ya se encuentra en la playlist</span>}
             <div className="flex flex-row items-center py-4 gap-4">
                 <div className="avatar left-0 hover:cursor-pointer">
                     <div className="w-20 rounded-l-xl">
