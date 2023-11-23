@@ -34,6 +34,7 @@ export default function Login() {
             <div className='bg-gray-800 flex flex-col justify-center p-6'>
                 <form className='max-w-[400px] w-full mx-auto bg-dark-cyan p-8 px-8 rounded-lg' onSubmit={handleLogin}>
                     <h2 className='text-4xl text-white text-center imprima-700'>LOG IN</h2>
+                    <a className="flex w-full justify-center pb-4 text-white imprima-700 italic">MusicBox</a>
                     <div className='flex flex-col text-white py-2 imprima-400'>
                         <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="text" placeholder="Usuario" value={identifier} onChange={(e) => setIdentifier(e.target.value)} required />
                     </div>

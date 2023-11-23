@@ -64,7 +64,7 @@ export const register = async (username, email, password) => {
 
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.status === 409) {
-            throw new Error("This account already exists.");
+            throw new Error("Esta cuenta ya existe");
         } else {
             console.error("An error occurred: ", error);
             throw error;
