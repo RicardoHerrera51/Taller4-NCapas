@@ -53,9 +53,6 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
   song.title.toLowerCase().includes(filterValue.toLowerCase())
 );
 
-  const handleTest = () => {
-    console.log(songs);
-  };
     return (
         <div className="drawer lg:drawer-open bg-greenish-black">
             <input type="checkbox" className="drawer-toggle" />

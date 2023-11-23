@@ -68,7 +68,7 @@ export default function Home({user = "usuario"}) {
           </div>
           <Titles title='Canciones' />
           {filteredSongs.map((song) => (
-                 <SongCard  onClick={() => handleSelectedSong(song)}  key={song.code} cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration}/>
+                 <SongCard  onClick={() => handleSelectedSong(song)}  key={song.code} code={song.code} cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration}/>
               ))}
         </main>
       </div>
