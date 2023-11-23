@@ -19,6 +19,7 @@ export default function MyPlaylists() {
   const [loading, setLoading] = useState(false);
   const [playlists, setPlaylists] = useState([]);
 
+
   const getData = async () => {
         
     try {
@@ -61,7 +62,7 @@ export default function MyPlaylists() {
                     </div>
                     {/* Display of created playlists */}
                     {playlists.map((playlist) => (
-                 <PlaylistCard key={playlist.code} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description}/>
+                 <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description}/>
               ))}
                 </main>
             </div>

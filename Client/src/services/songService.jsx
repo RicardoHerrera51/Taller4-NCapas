@@ -89,3 +89,24 @@ export const getSongs = async (token) => {
         return [];
       }
   }
+
+  export const deletePlaylist = async (token, playlistCode) => {
+    try {
+        const response = await axios.delete(`/playlist/delete?playlistCode=${playlistCode}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+              }
+        });
+          
+        // Check if the HTTP response is successful
+        if (response.status === 200) {
+          // The response data is already in JSON format
+          return response.data;
+        } else {
+          return [];
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        return [];
+      }
+  }
