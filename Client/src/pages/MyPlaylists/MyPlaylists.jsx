@@ -8,8 +8,37 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Titles from '../../components/Titles/Titles';
 
+
+import {getPlaylist} from "../../services/songService";
+import {useEffect, useState} from "react";
+
+
 export default function MyPlaylists() {
     const navigate = useNavigate();
+    
+  const [loading, setLoading] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
+
+
+  const getData = async () => {
+        
+    try {
+      
+      setLoading(true);
+    let response = await getPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk");
+    if (response) {
+        setPlaylists(response.content);
+      console.log(response.content);
+    } 
+    } catch (error) {
+    console.error('Error al obtener datos de la API:', error);
+    }
+};
+
+
+  useEffect(() => {
+    getData();
+  }, []);
 
     return (
         <div className="drawer lg:drawer-open bg-greenish-black">
@@ -17,7 +46,6 @@ export default function MyPlaylists() {
             <div className="drawer-content flex flex-col max-h-screen">
                 {/* Mobile navbar and music player bar */}
                 <MobNavbar />
-                <MusicBar />
 
                 {/* Contenido*/}
                 <main className="lg:flex-1 h-screen lg:h-full flex flex-col items-center imprima-400 text-white px-10 pt-10 pb-28 lg:p-10 gap-5 overflow-y-auto scrollbar">
@@ -33,18 +61,9 @@ export default function MyPlaylists() {
                         </div>
                     </div>
                     {/* Display of created playlists */}
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
-                    <PlaylistCard />
+                    {playlists.map((playlist) => (
+                 <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description}/>
+              ))}
                 </main>
             </div>
 
