@@ -14,5 +14,5 @@ import com.grupo13.Taller4.models.entities.SongXPlaylist;
 public interface SongXPlaylistRepository 
 extends ListCrudRepository<SongXPlaylist, UUID>{
 List<SongXPlaylist> findByPlaylist(Playlist playlist);
-SongXPlaylist findByPlaylistAndSong(Playlist list , Song song);
+SongXPlaylist findByPlaylistCodeAndSongCode(UUID playlist_code , UUID code_song);
 }

@@ -162,6 +162,7 @@ public class UserServicesImpl implements UserServices {
 	public ProfileDTO dataProfileUser(User user) {
 
 		ProfileDTO profile = new ProfileDTO();
+		profile.setUsername(user.getUsername());
 		profile.setGmail(user.getEmail());
 		profile.setImage(user.getImage());
 
