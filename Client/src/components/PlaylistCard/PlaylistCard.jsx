@@ -2,13 +2,13 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-export default function PlaylistCard({ title = "Titulo de playlist", description = "Descripción", duration = "23:33" }) {
+export default function PlaylistCard({ title = "Titulo de playlist", description = "Descripción", duration = "23:33", code = "" }) {
     const navigate = useNavigate();
 
     return (
         <div className="card flex justify-center lg:px-10 px-6 bg-light-blue w-full lg:w-11/12 lg:h-20">
             <div className="flex flex-row items-center justify-between py-2"> {/* Arreglar la navegación */}
-                <div onClick={() => navigate('/pl-details')} className="flex w-full py-2 justify-between hover:cursor-pointer">
+                <div onClick={() => navigate(`/my-pl/${code}`)} className="flex w-full py-2 justify-between hover:cursor-pointer">
                     <a>{title}</a>
                     <a className='hidden lg:block'>{description}</a>
                     <a className='hidden lg:block'>{duration}</a>
@@ -23,3 +23,4 @@ export default function PlaylistCard({ title = "Titulo de playlist", description
         </div>
     )
 }
+

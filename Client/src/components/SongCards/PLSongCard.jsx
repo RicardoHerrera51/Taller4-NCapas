@@ -1,13 +1,13 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function PLSongCard({ cover = "https://lastfm.freetls.fastly.net/i/u/500x500/42851f3f78390ec7f5bacd31c761c681.jpg", song = "Canción", artist = "Artista", duration = "3:33" }) {
+export default function PLSongCard({ cover = "https://lastfm.freetls.fastly.net/i/u/500x500/42851f3f78390ec7f5bacd31c761c681.jpg", song = "Canción", artist = "Artista", duration = "3:33", onClick, }) {
     return (
         <div className="card flex justify-center md:pr-10 pr-6 bg-light-blue text-sm md:text-base w-full lg:w-11/12 h-20 lg:h-20">
             <div className="flex flex-row items-center py-4 gap-4">
                 <div className="avatar left-0 hover:cursor-pointer">
                     <div className="w-20 rounded-l-xl">
-                        <img src={cover} />
+                        <img onClick={() => onClick()} src={cover} />
                     </div>
                 </div>
                 <div className='flex flex-row md:flex-row items-center justify-between w-full'>
