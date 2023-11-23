@@ -11,6 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProfileDTO {
 	
+	
+	@Email
+	@NotEmpty
+	private String username;
+	
 	@Email
 	@NotEmpty
 	private String gmail;
