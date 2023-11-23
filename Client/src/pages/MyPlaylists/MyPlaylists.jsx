@@ -1,16 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MobNavbar from '../../components/Navbars/MobNavbar';
-import MusicBar from '../../components/Navbars/MusicBar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import PlaylistCard from '../../components/PlaylistCard/PlaylistCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Titles from '../../components/Titles/Titles';
-
-
-import {getPlaylist} from "../../services/songService";
-import {useEffect, useState} from "react";
+import { getPlaylist } from "../../services/songService";
+import { useEffect, useState } from "react";
 
 
 export default function MyPlaylists() {
@@ -25,19 +22,17 @@ export default function MyPlaylists() {
 
 
   const getData = async () => {
-        
     try {
-      
       setLoading(true);
     let response = await getPlaylist(token);
     if (response) {
         setPlaylists(response.content);
-      console.log(response.content);
-    } 
+        console.log(response.content);
+      }
     } catch (error) {
-    console.error('Error al obtener datos de la API:', error);
+      console.error('Error al obtener datos de la API:', error);
     }
-};
+  };
 
 const handleSearchButtonClick = (inputValue) => {
   setFilterValue(inputValue);
@@ -53,12 +48,12 @@ playlist.title.toLowerCase().includes(filterValue.toLowerCase())
     getData();
   }, []);
 
-    return (
-        <div className="drawer lg:drawer-open bg-greenish-black">
-            <input type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col max-h-screen">
-                {/* Mobile navbar and music player bar */}
-                <MobNavbar />
+  return (
+    <div className="drawer lg:drawer-open bg-greenish-black">
+      <input type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content flex flex-col max-h-screen">
+        {/* Mobile navbar */}
+        <MobNavbar />
 
                 {/* Contenido*/}
                 <main className="lg:flex-1 h-screen lg:h-full flex flex-col items-center imprima-400 text-white px-10 pt-10 pb-28 lg:p-10 gap-5 overflow-y-auto scrollbar">
@@ -79,9 +74,16 @@ playlist.title.toLowerCase().includes(filterValue.toLowerCase())
               ))}
                 </main>
             </div>
+          </div>
+          {/* Display of created playlists */}
+          {playlists.map((playlist) => (
+            <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description} />
+          ))}
+        </main>
+      </div>
 
-            {/* Sidebar on web */}
-            <Sidebar />
-        </div>
-    )
+      {/* Sidebar on web */}
+      <Sidebar />
+    </div>
+  )
 }

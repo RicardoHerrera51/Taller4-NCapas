@@ -1,11 +1,10 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { deletePlaylist } from "../../services/songService";
 
-import {useEffect, useState} from "react";
-import {deletePlaylist} from "../../services/songService";
-
-export default function PlaylistCard({  title = "Titulo de playlist", getData, description = "Descripción", duration = "23:33", code = "" }) {
+export default function PlaylistCard({ title = "Titulo de playlist", getData, description = "Descripción", code = "" }) {
     const navigate = useNavigate();
     
   const token = localStorage.getItem('token');
@@ -16,9 +15,7 @@ export default function PlaylistCard({  title = "Titulo de playlist", getData, d
         console.log(title);
     };
 
-
     const deleteData = async () => {
-        
         try {
           
           setLoading(true);
@@ -28,13 +25,14 @@ export default function PlaylistCard({  title = "Titulo de playlist", getData, d
             getData();
         } 
         } catch (error) {
-        console.error('Error al obtener datos de la API:', error);
+            console.error('Error al obtener datos de la API:', error);
         }
     };
 
     const handleDelete = () => {
         deleteData();
     };
+
     return (
         <div className="card flex justify-center lg:px-10 px-6 bg-light-blue w-full lg:w-11/12 lg:h-20">
             <div className="flex flex-row items-center justify-between py-2"> {/* Arreglar la navegación */}
