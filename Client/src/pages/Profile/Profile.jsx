@@ -43,7 +43,7 @@ export default function Profile() {
                         <div className='flex flex-col items-center gap-8 w-56'>
                             <div className="avatar">
                                 <div className="w-40 lg:w-56 rounded-full border-2 border-gray">
-                                    <img src={profileData.image} />
+                                    <img src={profileData.image || "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"} alt="Profile" />
                                 </div>
                             </div>
                             <button type='button' className="btn btn-sm w-40 h-9 lg:w-56 imprima-400 text-white hover:text-white active:text-white bg-light-green hover:bg-darkest-green active:bg-dark-green border-none rounded-full">Editar foto</button>
