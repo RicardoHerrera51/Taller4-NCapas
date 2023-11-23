@@ -90,3 +90,22 @@ export const infoProfile = async (token) => {
         throw error;
     }
 }
+
+export const updateProfile = async (token, image) => {
+    try {
+        const response = await axios.patch(`/auth/profile/image?image=${image}`, {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error('An error occurred while fetching profile information:', error);
+        throw error;
+    }
+}
