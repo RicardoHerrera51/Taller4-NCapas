@@ -1,4 +1,3 @@
-import MusicBar from '../../components/Navbars/MusicBar';
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import Titles from '../../components/Titles/Titles';
@@ -33,7 +32,6 @@ export default function Profile() {
             <div className="drawer-content flex flex-col max-h-screen">
                 {/* Mobile navbar and music player bar */}
                 <MobNavbar />
-                <MusicBar />
 
                 {/* Contenido*/}
                 <main className="lg:flex-1 h-screen lg:h-full flex flex-col items-center imprima-400 text-white px-10 pt-10 pb-28 lg:p-10 gap-5 overflow-y-auto scrollbar">
