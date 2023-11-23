@@ -30,11 +30,11 @@ export default function Home() {
   const getData = async () => {
     try {
       setLoading(true);
-      let response = await getSongs(token);
-      if (response) {
-        setSongs(response.content);
-        console.log(response.content);
-      }
+    let response = await getSongs(token);
+    if (response) {
+      setSongs(response.content);
+      console.log(response.content);
+    } 
     } catch (error) {
       console.error('An error occurred while getting data:', error);
     }

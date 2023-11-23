@@ -5,17 +5,28 @@ import { getPlaylist, addSongToPlaylist } from "../../services/songService";
 import { useEffect, useState } from "react";
 
 
-export default function SongCard({ cover, code, song = "Canción", artist = "Artista", duration = "3:33", onClick }) {
-  const [loading, setLoading] = useState(false);
-  const [playlists, setPlaylists] = useState([]);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+export default function SongCard({ cover , code, song = "Canción", artist = "Artista", duration = "3:33", 
+onClick, }) {
+  
+  const token = localStorage.getItem('token');
+    const [loading, setLoading] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
   const getData = async () => {
     try {
       setLoading(true);
       let response = await getPlaylist(localStorage.getItem('token'));
 
+
+    const getData = async () => {
+          
+      try {
+        
+        setLoading(true);
+      let response = await getPlaylist(token);
+      
       if (response) {
         setPlaylists(response.content);
         console.log(response.content);
@@ -31,14 +42,14 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
   const postData = async (playlist) => {
     try {
       setLoading(true);
-      let response = await addSongToPlaylist(localStorage.getItem('token'), playlist, code);
-
-      if (response) {
-        console.log(response);
-        if (response === "Se agrego la cancion correctamente") {
-          setSuccess(true);
-          console.log("success");
-          setTimeout(() => {
+    let response = await addSongToPlaylist(token, playlist, code);
+  
+    if (response) {
+      console.log(response);
+      if(response === "Se agrego la cancion correctamente"){
+        setSuccess(true);
+        console.log("success");
+        setTimeout(() => {
             setSuccess(false);
           }, 1000);
         }

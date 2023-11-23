@@ -6,16 +6,24 @@ import { deletePlaylist } from "../../services/songService";
 
 export default function PlaylistCard({ title = "Titulo de playlist", getData, description = "Descripción", code = "" }) {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    
+  const token = localStorage.getItem('token');
+    
+  const [loading, setLoading] = useState(false);
+
+    const handleTest = () => {
+        console.log(title);
+    };
 
     const deleteData = async () => {
         try {
-            setLoading(true);
-            let response = await deletePlaylist(localStorage.getItem("token"), code);
-            if (response) {
-                console.log(response);
-                getData();
-            }
+          
+          setLoading(true);
+        let response = await deletePlaylist(token, code);
+        if (response) {
+          console.log(response);
+            getData();
+        } 
         } catch (error) {
             console.error('Error al obtener datos de la API:', error);
         }
