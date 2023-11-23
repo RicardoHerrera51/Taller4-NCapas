@@ -18,6 +18,8 @@ export default function MyPlaylists() {
     
   const [loading, setLoading] = useState(false);
   const [playlists, setPlaylists] = useState([]);
+  
+  const [filterValue, setFilterValue] = useState("");
 
 
   const getData = async () => {
@@ -34,6 +36,15 @@ export default function MyPlaylists() {
     console.error('Error al obtener datos de la API:', error);
     }
 };
+
+const handleSearchButtonClick = (inputValue) => {
+  setFilterValue(inputValue);
+};
+
+
+const filteredPlaylists = playlists.filter((playlist) =>
+playlist.title.toLowerCase().includes(filterValue.toLowerCase())
+);
 
 
   useEffect(() => {
@@ -57,11 +68,11 @@ export default function MyPlaylists() {
                             </button>
                         </div>
                         <div className=' lg:px-10 px-15'>
-                            <SearchBar placeholder='Busca una playlist...' />
+                            <SearchBar onSearch={handleSearchButtonClick} placeholder='Busca una playlist...' />
                         </div>
                     </div>
                     {/* Display of created playlists */}
-                    {playlists.map((playlist) => (
+                    {filteredPlaylists.map((playlist) => (
                  <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description}/>
               ))}
                 </main>
