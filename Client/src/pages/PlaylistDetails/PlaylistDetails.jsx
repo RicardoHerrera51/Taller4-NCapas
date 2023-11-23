@@ -5,6 +5,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import PLSongCard from '../../components/SongCards/PLSongCard';
 import Titles from '../../components/Titles/Titles';
 
+import { useParams } from "react-router-dom";
 import {getPlaylistbyID} from "../../services/songService";
 import {useEffect, useState} from "react";
 
@@ -16,6 +17,7 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
   const [songs, setSongs] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
   
+  const { id: playlistCode } = useParams();
   const [filterValue, setFilterValue] = useState("");
 
   const getData = async () => {
@@ -23,7 +25,7 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
     try {
       
       setLoading(true);
-    let response = await getPlaylistbyID("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", "a892c8a6-db8f-4888-a2dd-6e7b34fa75ca");
+    let response = await getPlaylistbyID("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlistCode);
     if (response) {
         setPlaylist(response);
       console.log(response);

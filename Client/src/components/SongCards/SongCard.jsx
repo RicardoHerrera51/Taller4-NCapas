@@ -1,7 +1,7 @@
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {getPlaylist} from "../../services/songService";
+import {getPlaylist, addSongToPlaylist} from "../../services/songService";
 import {useEffect, useState} from "react";
 
 
@@ -10,7 +10,6 @@ onClick, }) {
 
     const [loading, setLoading] = useState(false);
     const [playlists, setPlaylists] = useState([]);
-    const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   
     const getData = async () => {
           
@@ -28,6 +27,23 @@ onClick, }) {
       console.error('Error al obtener datos de la API:', error);
       }
   };
+
+  const postData = async (playlist) => {
+          
+    try {
+      
+      setLoading(true);
+    let response = addSongToPlaylist("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JhbGVzbWoiLCJpYXQiOjE3MDA2MzY3NDUsImV4cCI6MTcwMTkzMjc0NX0.pVCc7qqWreFX_o0q5cVOUHhHG60gYxRTL4YThe7SmNk", playlist, code);
+  
+    if (response) {
+      console.log(response);
+      
+      setLoading(false);
+    } 
+    } catch (error) {
+    console.error('Error al obtener datos de la API:', error);
+    }
+};
   
   
   const handleTest = () => {
@@ -37,7 +53,8 @@ onClick, }) {
   const handleSelectedPlaylist = (playlist) => {
     console.log(playlist);
     console.log(code);
-  };
+    postData(playlist);
+    };
 
     useEffect(() => {
     }, []);
