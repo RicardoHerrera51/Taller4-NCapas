@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../services/AuthServices";
 import { useState } from "react";
 
-export default function Login() {
+export default function Login({onLogin}) {
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -16,6 +16,7 @@ export default function Login() {
             if (token) {
                 console.log('Login successful. Token:', token);
                 localStorage.setItem('token', token);
+                onLogin();
                 navigate('/');
             } else {
                 console.log('Login failed. Invalid credentials.');
