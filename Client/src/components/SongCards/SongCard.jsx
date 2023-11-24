@@ -35,7 +35,7 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
 
           if (response) {
             console.log(response);
-            if (response === "Se agrego la canción correctamente") {
+            if (response === "Se agrego la cancion correctamente") {
               setSuccess(true);
               console.log("Success");
               setTimeout(() => {
@@ -44,6 +44,7 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
             }
             else {
               setError(true);
+              console.log("Error");
               setTimeout(() => {
                 setError(false);
               }, 1000);
