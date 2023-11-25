@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function Login({onLogin}) {
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(null);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -17,12 +18,14 @@ export default function Login({onLogin}) {
                 console.log('Login successful. Token:', token);
                 localStorage.setItem('token', token);
                 onLogin();
+                setLoginError("Inicio de sesión exitoso");
                 navigate('/');
             } else {
                 console.log('Login failed. Invalid credentials.');
             }
         } catch (error) {
             console.error('An error occurred during login:', error);
+            setLoginError("Error al iniciar sesión, intente de nuevo");
         }
     };
 
@@ -45,6 +48,9 @@ export default function Login({onLogin}) {
                     <div className='text-center text-slate-300 p-2 imprima-400'>
                         <p>¿No tienes una cuenta?{" "}<a href='/register' className='text-light-green underline'>Registrate</a></p>
                     </div>
+                    {loginError && (
+                        <div className="text-blue text-sm text-center">{loginError}</div>
+                    )}
                     <button className='w-full my-5 py-2 bg-light-green hover:bg-dark-green active:bg-lightest-green text-white hover:text-white active:text-white imprima-400 rounded-full' onClick={handleLogin}>
                         Inicia sesión
                     </button>

@@ -16,7 +16,7 @@ export default function Register() {
             setRegistrationError("La cuenta se creó con éxito");
         } catch (error) {
             console.error('Registration failed', error);
-            setRegistrationError(error.message);
+            setRegistrationError("Error al crear la cuenta, intente de nuevo");
         }
     };
 
@@ -37,7 +37,8 @@ export default function Register() {
                         <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                     <div className='flex flex-col text-white py-2 imprima-400'>
-                        <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="password" placeholder="Contraseña" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <a className="text-center text-xs py-1 px-2">8 caracteres (almenos una mayúscula, una minúscula, un dígito y un caracter especial @#$%^&+=!)</a>
                     </div>
                     <div className='text-center text-slate-300 p-2 imprima-400'>
                         <p>¿Ya tienes una cuenta?{" "}<a href='/login' className='text-light-green underline'>Inicia sesión</a></p>

@@ -33,6 +33,7 @@ export const logout = async (token) => {
         );
 
         if (response.status === 200) {
+            localStorage.removeItem('token');
             return null;
         } else {
             throw new Error(`Failed to log in. Please try again.`);
