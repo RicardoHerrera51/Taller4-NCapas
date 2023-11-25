@@ -9,9 +9,7 @@ import { useParams } from "react-router-dom";
 import { getPlaylistbyID } from "../../services/songService";
 import { useEffect, useState } from "react";
 
-export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
-
-    
+export default function PlaylistDetails() {
   const token = localStorage.getItem('token');
   const [loading, setLoading] = useState(false);
   const [playlist, setPlaylist] = useState();
@@ -23,8 +21,8 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
   const getData = async () => {
     try {
       setLoading(true);
-    let response = await getPlaylistbyID(token, playlistCode);
-    if (response) {
+      let response = await getPlaylistbyID(token, playlistCode);
+      if (response) {
         setPlaylist(response);
         console.log(response);
         console.log(response.page.content);
@@ -34,7 +32,6 @@ export default function PlaylistDetails({ songNumber = 0, plTime = "00:00"}) {
       console.error('Error al obtener datos de la API:', error);
     }
   };
-
 
   useEffect(() => {
     getData();

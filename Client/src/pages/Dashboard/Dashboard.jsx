@@ -20,7 +20,6 @@ export default function Home() {
   const getuserData = async () => {
     try {
       const userInfo = await infoProfile(token);
-
       setUserInfo(userInfo);
     } catch (error) {
       console.error('An error occurred while getting the username info:', error);

@@ -37,9 +37,9 @@ return (
                 <div className="w-full sm:w-1/2 lg:w-1/2 bg-dark-cyan rounded-lg p-8 mt-4">
                     <form onSubmit={handleCreate} className="flex flex-col gap-8">
                         <input id="title" name="title" type="text" className="w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none" placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)} required />
-                        <textarea id="description" name="description" rows="3" className="w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none" placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        <textarea id="description" name="description" rows="5" className="w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none" placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} required />
                         {registrationError && (
-                            <div className="text-blue text-sm text-center">{registrationError}</div>
+                            <span className="text-blue text-sm text-center imprima-700 italic">{registrationError}</span>
                         )}
                         <div className="flex justify-center">
                             <button type="submit" className="btn btn-sm h-9 border-none w-full bg-light-green hover:bg-dark-green active:bg-lightest-green text-white hover:text-white active:text-white imprima-400 rounded-full self-end">

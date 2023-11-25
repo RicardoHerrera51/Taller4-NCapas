@@ -40,14 +40,14 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
               console.log("Success");
               setTimeout(() => {
                 setSuccess(false);
-              }, 1000);
+              }, 1500);
             }
             else {
               setError(true);
               console.log("Error");
               setTimeout(() => {
                 setError(false);
-              }, 1000);
+              }, 1500);
             }
             setLoading(false);
           }
@@ -72,8 +72,8 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
 
       return (
         <div className="card flex justify-center md:pr-10 pr-6 bg-light-blue text-sm md:text-base w-full lg:w-11/12 h-20 lg:h-20">
-          {success && <span className="absolute -top-5 right-0 text-light-blue">Canción agregada exitosamente</span>}
-          {error && <span className="absolute -top-5 right-0 text-warning">La canción ya se encuentra en la playlist</span>}
+          {success && <span className="absolute -top-5 right-0 text-light-blue text-sm imprima-700 italic pr-2">Canción agregada exitosamente</span>}
+          {error && <span className="absolute -top-5 right-0 text-light-blue text-sm imprima-700 italic pr-2">La canción ya se encuentra en la playlist</span>}
           <div className="flex flex-row items-center py-4 gap-4">
             <div className="avatar left-0 hover:cursor-pointer">
               <div className="w-20 rounded-l-xl">
