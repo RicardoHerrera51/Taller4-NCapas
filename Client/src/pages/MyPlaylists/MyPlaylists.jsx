@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Titles from '../../components/Titles/Titles';
 import { getPlaylist } from "../../services/songService";
 import { useEffect, useState } from "react";
+import Loader from '../../components/Loader/Loader';
 
 
 export default function MyPlaylists() {
@@ -28,6 +29,7 @@ export default function MyPlaylists() {
     if (response) {
         setPlaylists(response.content);
         console.log(response.content);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error al obtener datos de la API:', error);
@@ -69,6 +71,8 @@ playlist.title.toLowerCase().includes(filterValue.toLowerCase())
                         </div>
                     </div>
                     {/* Display of created playlists */}
+                    
+                    {loading && <Loader />} 
                     {filteredPlaylists.map((playlist) => (
                  <PlaylistCard key={playlist.code} getData={getData} code={playlist.code} title={playlist.title} duration={playlist.totalDuration} description={playlist.description}/>
               ))}

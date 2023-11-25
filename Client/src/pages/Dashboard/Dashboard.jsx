@@ -7,6 +7,7 @@ import SongCard from '../../components/SongCards/SongCard';
 import Titles from '../../components/Titles/Titles';
 import { infoProfile } from '../../services/AuthServices';
 import { getSongs } from "../../services/songService";
+import Loader from "../../components/Loader/Loader";
 
 export default function Home() {
   const token = localStorage.getItem('token');
@@ -78,6 +79,7 @@ export default function Home() {
 
           </div>
           <Titles title='Canciones' />
+          {loading && <Loader />}
           {filteredSongs.map((song) => (
             <SongCard onClick={() => handleSelectedSong(song)} key={song.code} code={song.code} cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration} />
           ))}

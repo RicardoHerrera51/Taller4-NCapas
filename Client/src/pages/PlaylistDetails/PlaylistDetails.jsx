@@ -8,6 +8,7 @@ import Titles from '../../components/Titles/Titles';
 import { useParams } from "react-router-dom";
 import { getPlaylistbyID } from "../../services/songService";
 import { useEffect, useState } from "react";
+import Loader from '../../components/Loader/Loader';
 
 export default function PlaylistDetails() {
   const token = localStorage.getItem('token');
@@ -24,9 +25,8 @@ export default function PlaylistDetails() {
       let response = await getPlaylistbyID(token, playlistCode);
       if (response) {
         setPlaylist(response);
-        console.log(response);
-        console.log(response.page.content);
         setSongs(response.page.content);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error al obtener datos de la API:', error);
@@ -73,6 +73,8 @@ export default function PlaylistDetails() {
             </div>
           </div>
           {/* Display of songs in the playlist */}
+          
+          {loading && <Loader />}
           {filteredSongs.map((song) => (
             <PLSongCard key={song.code} onClick={() => handleSelectedSong(song)} code={song.code} playlist={playlistCode} cover={song.album_cover} artist={song.artist} song={song.title} duration={song.duration} getData={getData} />
           ))}

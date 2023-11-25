@@ -1,3 +1,4 @@
+import Loader from '../../components/Loader/Loader';
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import Titles from '../../components/Titles/Titles';
@@ -11,14 +12,17 @@ export default function Profile() {
         image: "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
     });
 
+    const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('token');
     const [newImage, setNewImage] = useState("");
     const [updateError, setUpdateError] = useState(null);
 
     const getData = async () => {
+        setLoading(true);
         try {
             const profileInfo = await infoProfile(token);
             setProfileData(profileInfo);
+            setLoading(false);
         } catch (error) {
             console.error('An error occurred while getting profile info:', error);
         }
@@ -71,6 +75,7 @@ export default function Profile() {
                         <div className='flex flex-col items-center gap-8 w-56'>
                             <div className="avatar flex flex-col items-center">
                                 <div className="w-40 lg:w-56 rounded-full border-2 border-gray">
+                                    
                                     <img src={profileData.image || "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"} alt="Profile" />
                                 </div>
                                 {updateError && (
@@ -94,8 +99,8 @@ export default function Profile() {
 
                         </div>
                         <div className='flex flex-col justify-center items-center lg:items-start text-xl imprima-400 text-white lg:text-2xl lg:p-0'>
-                            <a>{profileData.username}</a>
-                            <a>{profileData.gmail}</a>
+                            <a>{!loading ? profileData.username : 'Cargando...'}</a>
+                            <a>{!loading ? profileData.gmail : ''}</a>
                         </div>
                     </section>
                 </main>
