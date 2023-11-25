@@ -17,7 +17,6 @@ export default function Home() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [filterValue, setFilterValue] = useState("");
 
-
   const getuserData = async () => {
     try {
       const userInfo = await infoProfile(token);
@@ -33,7 +32,7 @@ export default function Home() {
     let response = await getSongs(token);
     if (response) {
       setSongs(response.content);
-      console.log(response.content);
+      setLoading(false);
     } 
     } catch (error) {
       console.error('An error occurred while getting data:', error);

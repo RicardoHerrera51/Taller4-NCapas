@@ -15,7 +15,6 @@ export default function PlaylistCard({ title = "Titulo de playlist", getData, de
             setLoading(true);
             let response = await deletePlaylist(token, code);
             if (response) {
-                console.log(response);
                 getData();
                 setDeleteError("La playlist fue borrada");
             }

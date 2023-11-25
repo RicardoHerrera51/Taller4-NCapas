@@ -18,8 +18,6 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
 
           if (response) {
             setPlaylists(response.content);
-            console.log(response.content);
-
             setLoading(false);
           }
         } catch (error) {
@@ -34,7 +32,6 @@ export default function SongCard({ cover, code, song = "Canción", artist = "Art
           let response = await addSongToPlaylist(token, playlist, code);
 
           if (response) {
-            console.log(response);
             if (response === "Se agrego la cancion correctamente") {
               setSuccess(true);
               console.log("Success");

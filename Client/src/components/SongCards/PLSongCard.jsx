@@ -12,8 +12,7 @@ export default function PLSongCard({ code, playlist, cover = "https://lastfm.fre
         try {
             setLoading(true);
             let response = await deleteSongFromPlaylist(token, playlist, code);
-            console.log(code);
-            console.log(playlist);
+            
             if (response) {
                 console.log(response);
                 getData();

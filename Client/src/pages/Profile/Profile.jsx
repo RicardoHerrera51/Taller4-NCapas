@@ -1,4 +1,3 @@
-import Loader from '../../components/Loader/Loader';
 import MobNavbar from '../../components/Navbars/MobNavbar';
 import Sidebar from '../../components/Navbars/Sidebar';
 import Titles from '../../components/Titles/Titles';

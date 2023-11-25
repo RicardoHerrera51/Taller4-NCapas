@@ -15,7 +15,6 @@ export default function Login({onLogin}) {
             const token = await login(identifier, password);
 
             if (token) {
-                console.log('Login successful. Token:', token);
                 localStorage.setItem('token', token);
                 onLogin();
                 setLoginError("Inicio de sesión exitoso");
