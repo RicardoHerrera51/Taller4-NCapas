@@ -130,7 +130,7 @@ public class PlaylistServicesImpl
            int seconds = durationInSeconds % 60;
            String durationFormatted = String.format("%02d:%02d", minutes, seconds);
 
-           SongDTO songDTO = new SongDTO(song.getTitle(), durationFormatted, songXPlaylist.getSaveDate());
+           SongDTO songDTO = new SongDTO(song.getCode(),song.getTitle(), durationFormatted, songXPlaylist.getSaveDate(),song.getUrl(),song.getAlbum_cover(),song.getArtist());
            songDTOs.add(songDTO);
        }
       
@@ -200,8 +200,59 @@ public class PlaylistServicesImpl
 		Pageable pageable = PageRequest.of(page, size,Sort.by("title").ascending());
 		return playlistRepository.findAllByUser(user, pageable);
 	}
+	
+	//Delete play list
 
 
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public boolean deletePlaylist(String info, User user_code) throws Exception {
+		UUID playlistUUID = UUID.fromString(info);
+	
+		 Playlist existPlaylist = playlistRepository.findByCode(playlistUUID);
+	
+		if (existPlaylist == null) {
+			 System.out.println("La playlist que desea eliminar no existe");
+			 return false;
+		}
+
+		List<SongXPlaylist> songsInPlaylist = songXPlaylistRepository
+				.findByPlaylist(playlistRepository.findByCode(playlistUUID));
+
+		// delete all song by play list
+		songXPlaylistRepository.deleteAll(songsInPlaylist);
+
+		playlistRepository.deleteById(playlistUUID);
+
+		return true;
+
+	}
+	
+
+	@Override
+	@Transactional(rollbackOn = Exception.class)
+	public boolean deleteSongFromPlaylist(String playlistCode, String songCode, User user_code) {
+	    UUID playlistUUID = UUID.fromString(playlistCode);
+	    UUID songUUID = UUID.fromString(songCode);
+
+	    Playlist existPlaylist = playlistRepository.findByCode(playlistUUID);
+	    Song song = songRepository.findByCode(songUUID);
+
+	    if (existPlaylist == null || song == null) {
+	        System.out.println("La playlist o la canción no existen.");
+	        return false;
+	    }
+
+	    SongXPlaylist songXPlaylist = songXPlaylistRepository.findByPlaylistCodeAndSongCode(playlistUUID, songUUID);
+
+	    if (songXPlaylist == null) {
+	        System.out.println("La canción no está asociada con la playlist.");
+	        return false;
+	    }
+
+	    songXPlaylistRepository.delete(songXPlaylist);
+	    return true;
+	}
 
 
 

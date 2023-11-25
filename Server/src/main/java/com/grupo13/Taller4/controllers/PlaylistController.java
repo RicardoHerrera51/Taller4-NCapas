@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,7 +75,7 @@ public class PlaylistController {
 
 	@GetMapping("/user/playlist")
 	public ResponseEntity<?> findAllPlaylistByUser(@RequestParam(value = "keyword", required = false) String Keyword , 
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size,
 			@RequestHeader("Authorization") String bearerToken) throws Exception{
 		
 	
@@ -141,7 +142,7 @@ public class PlaylistController {
 	
 	@GetMapping("/playlist/")
 	public ResponseEntity<?> getDetailsPlaylist(@RequestParam("playlistCode") String playlistCode, 
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size,
 			@RequestHeader("Authorization") String bearerToken) {
 	
 	    try {
@@ -167,5 +168,51 @@ public class PlaylistController {
 	    }
 	}
 	
+	@DeleteMapping("/playlist/delete")
+	public ResponseEntity<?> deletePlaylist(@RequestParam("playlistCode") String playlistCode, @RequestHeader("Authorization") String bearerToken) throws Exception {
+		String message = "";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (user == null) {
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		}
+		
+		boolean deleteRequest = playlistServices.deletePlaylist(playlistCode, user);
+		System.out.println(deleteRequest);
+		
+		if (!deleteRequest) {
+			message = "La playlist que desea eliminar no existe dentro de su biblioteca";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+		} else {
+			message = "La playlist ha sido eminada exitosamente";
+			return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+		}
+		
+	}
+	
+	@DeleteMapping("/playlist/song/delete")
+	public ResponseEntity<?> deleteSongFromPlaylist(@RequestParam("playlistCode") String playlistCode, @RequestParam("songCode") String songCode, @RequestHeader("Authorization") String bearerToken) throws Exception
+	{
+		String message = "";
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (user == null) {
+			message = "Usuario no encontrado";
+			return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+		}
+		
+		boolean deleteSongRequest = playlistServices.deleteSongFromPlaylist(playlistCode, songCode,  user);
+		
+		if (!deleteSongRequest) {
+			message = "La cancion o el nombre de la plylist no es valido";
+			return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+		} else {
+			message = "La canción a sido elimanda exitosamente de la playlist";
+			return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+		}
+		
+	}
+
 
 }

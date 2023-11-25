@@ -40,6 +40,17 @@ public class Song {
     @Column(name="duration")
     private int duration;
     
+    @NotNull(message = "El enlace de reprodución es obligatorio")
+    @Column(name="url")
+    private String url;
+    
+    @Column(name="album_cover")
+    private String album_cover;
+    
+    @NotNull(message = "El artista de la canción es obligatorio")
+    @Column(name="artist")
+    private String artist;
+    
     @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<SongXPlaylist> playlists;

@@ -1,70 +1,58 @@
-import loginImage from '../../assets/loginImage.jpg'
-import { useState } from 'react';
-import FetchServices from '../../services/FetchServices';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { login } from "../../services/AuthServices";
+import { useState } from "react";
 
-export default function Login() {
-    const [identifier, setIdentifier] = useState("");
-    const [password, setPassword] = useState("");
+export default function Login({onLogin}) {
+    const [identifier, setIdentifier] = useState('');
+    const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(null);
     const navigate = useNavigate();
 
-    const handleFormSubmit = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        // Call the login function from FetchServices
-        FetchServices.login(identifier, password)
-            .then((response) => {
-                // Handle the response (e.g., store the token, redirect to another page)
-                console.log('Petition processed');
+        try {
+            const token = await login(identifier, password);
 
-                // Check if the authentication was successful
-                if (response) {
-                    // Redirect to the songs page after successful login
-                    console.log('Login successful');
-                    localStorage.setItem('token', response);
-                    navigate('/all-songs');
-                } else {
-                    // Handle authentication failure (e.g., display an error message)
-                    console.error('Authentication failed');
-                }
-            })
-            .catch((error) => {
-                // Handle login error (e.g., display an error message)
-                console.error('Login error:', error);
-            });
+            if (token) {
+                console.log('Login successful. Token:', token);
+                localStorage.setItem('token', token);
+                onLogin();
+                setLoginError("Inicio de sesión exitoso");
+                navigate('/');
+            } else {
+                console.log('Login failed. Invalid credentials.');
+            }
+        } catch (error) {
+            console.error('An error occurred during login:', error);
+            setLoginError("Error al iniciar sesión, intente de nuevo");
+        }
     };
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 min-h-screen p-6 sm:p-0 bg-greenish-black'>
             <div className='hidden sm:block'>
-                <img className='h-screen w-full' src={loginImage} alt="" />
+                <img className='h-screen w-full' src="/assets/loginImage.jpg" alt="sideImage" />
             </div>
 
-            <div className='bg-gray-800 flex flex-col justify-center'>
-                <form className='max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg' onSubmit={handleFormSubmit}>
-                    <h2 className='text-4xl dark:text-white font-bold text-center '>
-                        LOG IN
-                    </h2>
-
-                    <div className='flex flex-col text-gray-400 py-2'>
-                        <label>Username</label>
-                        <input className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' type="text"
-                            value={identifier} onChange={(e) => setIdentifier(e.target.value)} />
+            <div className='bg-gray-800 flex flex-col justify-center p-6'>
+                <form className='max-w-[400px] w-full mx-auto bg-dark-cyan p-8 px-8 rounded-lg' onSubmit={handleLogin}>
+                    <h2 className='text-4xl text-white text-center imprima-700'>LOG IN</h2>
+                    <a className="flex w-full justify-center pb-4 text-white imprima-700 italic">MusicBox</a>
+                    <div className='flex flex-col text-white py-2 imprima-400'>
+                        <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="text" placeholder="Usuario" value={identifier} onChange={(e) => setIdentifier(e.target.value)} required />
                     </div>
-
-                    <div className='flex flex-col text-gray-400 py-2'>
-                        <label>Password</label>
-                        <input className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' type="password"
-                            value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <div className='flex flex-col text-white py-2 imprima-400'>
+                        <input className='w-full py-2 px-3 bg-light-cyan text-white rounded-lg focus:outline-none' type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
-
-                    <div className='text-center text-gray-400 p-2'>
-                        <p>Do not have an account?{" "}<a href='/register' className='text-teal-500 underline'>Register here</a></p>
+                    <div className='text-center text-slate-300 p-2 imprima-400'>
+                        <p>¿No tienes una cuenta?{" "}<a href='/register' className='text-light-green underline'>Registrate</a></p>
                     </div>
-
-                    <button className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg'
-                        onClick={handleFormSubmit}>
-                        Sign In
+                    {loginError && (
+                        <div className="text-blue text-sm text-center">{loginError}</div>
+                    )}
+                    <button className='w-full my-5 py-2 bg-light-green hover:bg-dark-green active:bg-lightest-green text-white hover:text-white active:text-white imprima-400 rounded-full' onClick={handleLogin}>
+                        Inicia sesión
                     </button>
                 </form>
             </div>

@@ -4,6 +4,7 @@ package com.grupo13.Taller4.models.dtos;
 
 import java.util.List;
 
+
 import org.springframework.data.domain.Page;
 
 import com.grupo13.Taller4.models.entities.SongXPlaylist;
@@ -17,7 +18,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class PlaylistDetailsDTO {
-	
 	private String title;
     private String description;
     private List<SongDTO> songs;

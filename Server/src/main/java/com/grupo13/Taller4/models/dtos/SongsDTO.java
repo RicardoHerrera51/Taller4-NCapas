@@ -17,5 +17,14 @@ public class SongsDTO {
 	private String title;
 	
 	@NotEmpty
+	private String artist;
+	
+	@NotEmpty
 	private String duration;
+	
+	@NotEmpty
+	private String url;
+	
+	@NotEmpty
+	private String album_cover;
 }
