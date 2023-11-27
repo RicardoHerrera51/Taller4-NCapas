@@ -178,7 +178,7 @@ INSERT INTO public.playlist VALUES ('75b6b89a-d571-4d51-9f50-7c9119292ef4', 'Lla
 INSERT INTO public.song VALUES ('238c080d-1410-4baf-9a26-31e77b79b903', 'pojos telefono', 161);
 INSERT INTO public.song VALUES ('5b2cfd47-e5c8-4795-8f78-00ed3cb903c3', 'salvaje crimson', 77);
 INSERT INTO public.song VALUES ('3985df81-7771-41f3-811d-844c240e0955', 'los las', 120);
-INSERT INTO public.song VALUES ('70bbe196-280d-41b6-a43a-f81aff6b1324', 'partido sexo', 69);
+INSERT INTO public.song VALUES ('70bbe196-280d-41b6-a43a-f81aff6b1324', 'partido', 69);
 INSERT INTO public.song VALUES ('6d0faedf-4b29-48d8-9c77-a50ef1d6291b', 'amores arbol', 112);
 INSERT INTO public.song VALUES ('36b752db-830e-43e9-a15a-a2b33a686e6c', 'pantalla java', 75);
 INSERT INTO public.song VALUES ('6f7fa3cb-b4fe-47a1-adb6-267940b9315a', 'pojos telefono', 169);
@@ -256,7 +256,7 @@ INSERT INTO public.song VALUES ('da3d5e36-2cfb-492a-a906-6e07352a7161', 'amores 
 INSERT INTO public.song VALUES ('641977e0-11f2-4bda-8228-171845991d4b', 'partida el', 140);
 INSERT INTO public.song VALUES ('07c163cd-ebe6-4274-8915-389d1bd38fd2', 'salvaje crimson', 173);
 INSERT INTO public.song VALUES ('c6dbc0e0-6b48-4f8c-8b34-ea5f041e2676', 'corazon partida', 93);
-INSERT INTO public.song VALUES ('574685bb-a275-4c02-8e45-fee2db97fb5d', 'partido sexo', 98);
+INSERT INTO public.song VALUES ('574685bb-a275-4c02-8e45-fee2db97fb5d', 'partido', 98);
 INSERT INTO public.song VALUES ('c2c13d92-d16f-4d8e-94dc-ed4a30fca19f', 'las amores', 104);
 INSERT INTO public.song VALUES ('616b8fa2-e6f4-4148-b607-413c9bd9b40c', 'java pojos', 173);
 INSERT INTO public.song VALUES ('1afc0d62-8b61-48d7-8845-2182eca64336', 'los las', 173);
@@ -274,7 +274,7 @@ INSERT INTO public.song VALUES ('5e1795db-561d-48fa-8165-9fbb1ec75b5a', 'la los'
 INSERT INTO public.song VALUES ('fd1cb28e-4c85-4f55-97fd-924bcfdfe4e9', 'la los', 85);
 INSERT INTO public.song VALUES ('c6057de1-3c85-4ba1-8d8b-e457abc91bf1', 'la los', 148);
 INSERT INTO public.song VALUES ('b6973b1d-c9c1-4ee3-9c1f-65075482d814', 'corazon partida', 60);
-INSERT INTO public.song VALUES ('4197c253-bb07-4b23-9cac-6d51651833a3', 'sexo salvaje', 150);
+INSERT INTO public.song VALUES ('4197c253-bb07-4b23-9cac-6d51651833a3', 'salvaje', 150);
 
 
 --
